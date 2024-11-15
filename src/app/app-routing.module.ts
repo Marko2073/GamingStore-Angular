@@ -24,7 +24,25 @@ const routes: Routes = [
       {
         path: 'shop',
         loadChildren: () => import('./shop/shop.module').then(m => m.ShopModule)
+      },
+      {
+        path: 'login',
+        loadChildren: () => import('./login/login.module').then(m => m.LoginModule)
+      },
+      {
+        path: 'register',
+        loadChildren: () => import('./register/register.module').then(m => m.RegisterModule)
+      },
+      {
+        path: 'checkout',
+        loadChildren: () => import('./checkout/checkout.module').then(m => m.CheckoutModule)
+      },
+      {
+        path: 'builder',
+        loadChildren: () => import('./builder/builder.module').then(m => m.BuilderModule)
       }
+
+
     ]
   },
 ];
