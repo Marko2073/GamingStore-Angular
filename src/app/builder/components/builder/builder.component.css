@@ -1,0 +1,63 @@
+#pc-builder-container {
+  width: 80%;
+  margin: 0 auto;
+  margin-top: 20px;
+}
+
+#pc-builder-header-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #333;
+  color: white;
+  padding: 10px;
+  font-size: 14px;
+}
+
+#pc-builder-header-bar .pc-builder-url {
+  font-size: 14px;
+  color: white;
+}
+
+#pc-builder-new-list-btn {
+  background-color: #1a73e8;
+  color: white;
+  padding: 5px 10px;
+  border: none;
+  cursor: pointer;
+}
+
+#pc-builder-country-select,
+#pc-builder-compatibility-status,
+#pc-builder-estimated-wattage {
+  margin-left: 10px;
+}
+
+#pc-builder-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+#pc-builder-table th, #pc-builder-table td {
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: center;
+}
+
+#pc-builder-table th {
+  background-color: #333;
+  color: white;
+}
+
+.pc-builder-add-btn {
+  background-color: #1a73e8;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+.pc-builder-add-btn:hover {
+  background-color: #145bb5;
+}

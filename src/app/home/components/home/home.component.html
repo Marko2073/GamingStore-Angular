@@ -1,0 +1,143 @@
+<!-- Carousel Start -->
+<div class="container-fluid mb-3">
+  <div class="row px-xl-5">
+    <div class="col-lg-8">
+      <div id="header-carousel" class="carousel slide carousel-fade mb-30 mb-lg-0" data-ride="carousel">
+
+        <div class="carousel-inner">
+          <div class="carousel-item position-relative active" style="height: 430px;">
+            <img class="position-absolute w-100 h-100" src="assets/img/asus-baner.png" style="object-fit: cover;" alt="baner">
+            <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
+              <div class="p-3" style="max-width: 700px;">
+                <h1 class="display-4 text-white mb-3 animate__animated animate__fadeInDown">Laptop Store </h1>
+                <p class="mx-md-5 px-5 animate__animated animate__bounceIn">Welcome to Laptop Store - Your Ultimate Destination for High-Performance Laptops!</p>
+                <a class="btn btn-outline-light py-2 px-4 mt-3 animate__animated animate__fadeInUp" href="/products">Shop Now</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-4">
+      <div class="product-offer mb-30" style="height: 200px;">
+        <img class="img-fluid" src="assets/img/img.png" alt="">
+        <div class="offer-text">
+          <h6 class="text-white text-uppercase">Save 20%</h6>
+          <h3 class="text-white mb-3">Special Offer</h3>
+          <a href="/products" class="btn btn-primary">Shop Now</a>
+        </div>
+      </div>
+      <div class="product-offer mb-30" style="height: 200px;">
+        <img class="img-fluid" src="assets/img/img_1.png" alt="">
+        <div class="offer-text">
+          <h6 class="text-white text-uppercase">Save 20%</h6>
+          <h3 class="text-white mb-3">Special Offer</h3>
+          <a href="/products" class="btn btn-primary">Shop Now</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Carousel End -->
+
+
+<!-- Products Start
+<div class="container-fluid pt-5 pb-3">
+  <h2 class="section-title position-relative text-uppercase mx-xl-5 mb-4"><span class="bg-secondary pr-3">Featured Products</span></h2>
+  <div class="row px-xl-5">
+    @for (product of featuredProducts;track $index){
+      <div class="col-lg-3 col-md-4 col-sm-6 pb-1">
+        <div class="product-item bg-light mb-4">
+          <div class="product-img position-relative overflow-hidden">
+            <img class="img-fluid w-100" src="assets/img/products/{{product.pictures[0].path}}" alt="">
+            <div class="product-action">
+              <a class="btn btn-outline-dark btn-square" (click)="AddToCart($event, product.id)"><i class="fa fa-shopping-cart"></i></a>
+              <a class="btn btn-outline-dark btn-square" href="/products/{{product.id}}"><i class="fa fa-search"></i></a>
+            </div>
+          </div>
+          <div class="text-center py-4">
+            <a class="h6 text-decoration-none text-truncate" href="/products/{{product.id}}">{{product.brandName}} {{product.modelName}}</a>
+            <div class="d-flex align-items-center justify-content-center mt-2">
+              <h5>${{product.price}}</h5><h6 class="text-muted ml-2"><del>{{product.price}}</del></h6>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+    }
+
+  </div>
+</div>
+Products End
+
+<div class="modal" [ngClass]="{ 'is-active': showModal }">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Add to Cart</h5>
+        <button type="button" class="close" aria-label="Close" (click)="closeModal()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Product added to cart successfully.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="closeModal()">Close</button>
+      </div>
+    </div>
+  </div>
+</div>-->
+<!-- Add to Cart Modal End -->
+
+<style>
+  .modal {
+    display: none; /* Make the modal invisible initially */
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 9999;
+  }
+
+  .is-active {
+    display: block; /* Show the modal when the condition is met */
+  }
+
+  .modal-dialog {
+    max-width: 400px; /* Adjust the width as needed */
+  }
+
+  .modal-content {
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2); /* Add shadow to the modal */
+  }
+
+  .modal-header {
+    background-color: #f8f9fa; /* Background color of the header */
+    border-bottom: none; /* Remove the bottom border */
+  }
+
+  .modal-body, .modal-footer {
+    padding: 20px; /* Add padding inside the modal */
+  }
+
+  .modal-footer {
+    border-top: none; /* Remove the top border */
+  }
+
+  .modal-title {
+    font-size: 1.25rem; /* Font size for the title */
+  }
+
+  .btn-secondary {
+    background-color: #6c757d; /* Background color for the button */
+    border-color: #6c757d; /* Border color for the button */
+    color: #fff; /* Text color for the button */
+  }
+
+  .btn-secondary:hover {
+    background-color: #5a6268; /* Background color for the button on hover */
+    border-color: #545b62; /* Border color for the button on hover */
+  }
+</style>
