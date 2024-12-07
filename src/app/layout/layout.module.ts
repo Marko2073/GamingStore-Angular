@@ -8,11 +8,14 @@ import {RouterModule, RouterOutlet} from "@angular/router";
 
 
 @NgModule({
-  declarations: [
-    LayoutComponent,
-    HeaderComponent,
-    FooterComponent
-  ],
+    declarations: [
+        LayoutComponent,
+        HeaderComponent,
+        FooterComponent
+    ],
+    exports: [
+        HeaderComponent
+    ],
     imports: [
         CommonModule,
         RouterModule

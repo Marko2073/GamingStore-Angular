@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LayoutComponent } from './layout/components/layout/layout.component';
+import {AdminLayoutComponent} from "./admin-layout/components/admin-layout/admin-layout.component";
 
 
 const routes: Routes = [
@@ -45,6 +46,21 @@ const routes: Routes = [
 
     ]
   },
+  {
+    path: 'admin',
+    component: AdminLayoutComponent,
+    children: [
+      {
+        path: '',
+        pathMatch: 'full',
+        redirectTo: 'home'
+      },
+      {
+        path: 'home',
+        loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule)
+      }
+    ]
+  }
 ];
 
 @NgModule({
