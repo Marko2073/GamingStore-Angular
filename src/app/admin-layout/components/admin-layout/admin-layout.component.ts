@@ -1,4 +1,6 @@
 import { Component, OnInit, Renderer2 } from '@angular/core';
+import {HttpClient} from "@angular/common/http";
+import {Observable} from "rxjs";
 
 @Component({
   selector: 'app-admin-layout',
@@ -6,9 +8,13 @@ import { Component, OnInit, Renderer2 } from '@angular/core';
   styleUrls: ['./admin-layout.component.css'],
 })
 export class AdminLayoutComponent implements OnInit {
-  constructor(private renderer: Renderer2) {}
+
+  constructor(private renderer: Renderer2, private http: HttpClient) {}
+
 
   ngOnInit(): void {
+
+
 
     this.loadStyle('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css');
     this.loadStyle('https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css');
@@ -44,4 +50,7 @@ export class AdminLayoutComponent implements OnInit {
     link.href = href;
     this.renderer.appendChild(document.head, link);
   }
+
+
+
 }

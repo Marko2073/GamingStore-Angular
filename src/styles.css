@@ -9721,3 +9721,8 @@ a.text-dark:hover, a.text-dark:focus {
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
+html, body {
+  height: 100%; /* Puna visina za HTML i body */
+  margin: 0; /* Uklanja default margine */
+}
+

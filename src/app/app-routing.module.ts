@@ -58,7 +58,13 @@ const routes: Routes = [
       {
         path: 'home',
         loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule)
+      },
+      {
+        path: ':table',
+        loadChildren: () => import('./admin-table/admin-table.module').then(m => m.AdminTableModule)
       }
+
+
     ]
   }
 ];
