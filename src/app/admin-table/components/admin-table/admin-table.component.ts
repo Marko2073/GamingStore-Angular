@@ -28,8 +28,6 @@ export class AdminTableComponent implements OnInit {
           // Sortiranje ključeva tako da 'id' bude prvi
           this.keys = this.sortKeys(Object.keys(this.response[0]));
 
-          console.log(this.keys);
-          console.log(response);
         }, error => {
           console.error('Greška u zahtevima', error);
         });
@@ -42,8 +40,16 @@ export class AdminTableComponent implements OnInit {
   }
 
   sortKeys(keys: string[]): string[] {
-    // Premesti 'id' na prvo mesto, ostale ključeve sortiraj po abecedi
-    const sortedKeys = keys.filter(key => key !== 'id').sort();
-    return ['id', ...sortedKeys];  // 'id' na početku, ostali ključevi u abecednom redu
+    // Zadrži ključ 'id' i sve koje se ne završavaju sa 'Id', ostalo preskoči
+    const filteredKeys = keys.filter(key => key === 'id' || !key.endsWith('Id'));
+
+    // Ukloni 'id' iz niza, ako postoji, kako bi se mogao staviti na prvo mesto
+    const idIndex = filteredKeys.indexOf('id');
+    if (idIndex > -1) {
+      filteredKeys.splice(idIndex, 1); // Ukloni 'id' sa trenutne pozicije
+    }
+
+    // Sortiraj ostale ključeve i dodaj 'id' na početak
+    return ['id', ...filteredKeys.sort()];
   }
 }
