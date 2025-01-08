@@ -1,10 +1,32 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LayoutComponent } from './layout/components/layout/layout.component';
-import {AdminLayoutComponent} from "./admin-layout/components/admin-layout/admin-layout.component";
-
-
+import { AdminLayoutComponent } from './admin-layout/components/admin-layout/admin-layout.component';
+import { NotFoundComponent } from './not-found/not-found.component';
 const routes: Routes = [
+  {
+    path: 'admin',
+    component: AdminLayoutComponent,
+    children: [
+      {
+        path: '',
+        pathMatch: 'full',
+        redirectTo: 'home'
+      },
+      {
+        path: 'home',
+        loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule)
+      },
+      {
+        path: 'page',
+        loadChildren: () => import('./admin-table/admin-table.module').then(m => m.AdminTableModule)
+      },
+      {
+        path: '**', // Catch-all for admin routes
+        component: NotFoundComponent
+      }
+    ]
+  },
   {
     path: '',
     component: LayoutComponent,
@@ -41,31 +63,16 @@ const routes: Routes = [
       {
         path: 'builder',
         loadChildren: () => import('./builder/builder.module').then(m => m.BuilderModule)
+      },
+      {
+        path: '**', // Catch-all for shop routes
+        component: NotFoundComponent
       }
-
-
     ]
   },
   {
-    path: 'admin',
-    component: AdminLayoutComponent,
-    children: [
-      {
-        path: '',
-        pathMatch: 'full',
-        redirectTo: 'home'
-      },
-      {
-        path: 'home',
-        loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule)
-      },
-      {
-        path: ':table',
-        loadChildren: () => import('./admin-table/admin-table.module').then(m => m.AdminTableModule)
-      }
-
-
-    ]
+    path: '**', // Global fallback if no matching route is found
+    redirectTo: ''
   }
 ];
 
@@ -73,4 +80,4 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}
