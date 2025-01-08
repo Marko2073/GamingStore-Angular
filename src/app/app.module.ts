@@ -6,10 +6,12 @@ import { AppComponent } from './app.component';
 import {LayoutModule} from "./layout/layout.module";
 import {AdminLayoutModule} from "./admin-layout/admin-layout.module";
 import {HttpClientModule} from "@angular/common/http";
+import { NotFoundComponent } from './not-found/not-found.component';
 
 @NgModule({
   declarations: [
     AppComponent,
+    NotFoundComponent,
   ],
   imports: [
     BrowserModule,
