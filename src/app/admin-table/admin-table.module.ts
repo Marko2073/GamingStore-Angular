@@ -8,6 +8,12 @@ import { ModelsComponent } from './components/models/models.component';
 import { CategoriesComponent } from './components/categories/categories.component';
 import { ModelversionsComponent } from './components/modelversions/modelversions.component';
 import { ModelversionspecificationsComponent } from './components/modelversionspecifications/modelversionspecifications.component';
+import { SpecificationsComponent } from './components/specifications/specifications.component';
+import { UsersComponent } from './components/users/users.component';
+import { RolesComponent } from './components/roles/roles.component';
+import { PricesComponent } from './components/prices/prices.component';
+import { PicturesComponent } from './components/pictures/pictures.component';
+import { CategoryspecificationsComponent } from './components/categoryspecifications/categoryspecifications.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +22,13 @@ import { ModelversionspecificationsComponent } from './components/modelversionsp
     ModelsComponent,
     CategoriesComponent,
     ModelversionsComponent,
-    ModelversionspecificationsComponent
+    ModelversionspecificationsComponent,
+    SpecificationsComponent,
+    UsersComponent,
+    RolesComponent,
+    PricesComponent,
+    PicturesComponent,
+    CategoryspecificationsComponent
   ],
   imports: [
     CommonModule,

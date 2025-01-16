@@ -4,11 +4,12 @@ import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 
 @Component({
-  selector: 'app-modelversions',
-  templateUrl: './modelversions.component.html',
-  styleUrl: './modelversions.component.css'
+  selector: 'app-prices',
+  templateUrl: './prices.component.html',
+  styleUrl: './prices.component.css'
 })
-export class ModelversionsComponent implements  OnInit{
+export class PricesComponent implements  OnInit{
+
   tableName: string | null = null;
   response: any = [];
   keys: string[] = [];
@@ -16,25 +17,22 @@ export class ModelversionsComponent implements  OnInit{
   constructor(private route: ActivatedRoute, private http: HttpClient) { }
 
   ngOnInit(): void {
-    this.tableName = "Model Versions";
+    this.tableName = "Prices";
 
-    const url = `http://localhost:5083/api/modelversions`;
+    const url = `http://localhost:5083/api/prices`;
     this.getData(url).subscribe(response => {
       this.response = response;
       console.log(this.response);
 
-
-
     }, error => {
       console.error('Greška u zahtevima', error);
     });
-
-    this.keys=['id','brandName','modelName', 'stockQuantity']
-
+    this.keys=['id', 'modelVersionName', 'value', 'dateFrom', 'dateTo']
   }
 
   getData(url: string): Observable<any> {
     return this.http.get<any>(url);
   }
+
 
 }

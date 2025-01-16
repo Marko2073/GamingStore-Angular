@@ -16,7 +16,7 @@ export class ModelversionspecificationsComponent implements  OnInit{
   constructor(private route: ActivatedRoute, private http: HttpClient) { }
 
   ngOnInit(): void {
-    this.tableName = "ModelVersionSpecifications";
+    this.tableName = "Model Version Specifications";
 
     const url = `http://localhost:5083/api/modelversionspecifications`;
     this.getData(url).subscribe(response => {

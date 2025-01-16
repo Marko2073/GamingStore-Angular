@@ -4,11 +4,12 @@ import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 
 @Component({
-  selector: 'app-modelversions',
-  templateUrl: './modelversions.component.html',
-  styleUrl: './modelversions.component.css'
+  selector: 'app-users',
+  templateUrl: './users.component.html',
+  styleUrl: './users.component.css'
 })
-export class ModelversionsComponent implements  OnInit{
+export class UsersComponent implements  OnInit{
+
   tableName: string | null = null;
   response: any = [];
   keys: string[] = [];
@@ -16,25 +17,24 @@ export class ModelversionsComponent implements  OnInit{
   constructor(private route: ActivatedRoute, private http: HttpClient) { }
 
   ngOnInit(): void {
-    this.tableName = "Model Versions";
+    this.tableName = "Users";
 
-    const url = `http://localhost:5083/api/modelversions`;
+    const url = `http://localhost:5083/api/users`;
     this.getData(url).subscribe(response => {
       this.response = response;
       console.log(this.response);
-
-
 
     }, error => {
       console.error('Greška u zahtevima', error);
     });
 
-    this.keys=['id','brandName','modelName', 'stockQuantity']
+    this.keys=['id', 'firstName', 'lastName', 'email', 'city', 'address', 'phone', 'path']
 
   }
 
   getData(url: string): Observable<any> {
     return this.http.get<any>(url);
   }
+
 
 }

@@ -19,7 +19,16 @@
           @for (row of response; track $index){
             <tr>
               @for (key of keys; track $index){
-                <td>{{row[key]}}</td>
+                @if (key=='path'){
+                  <td><img src="http://localhost:5083/images/{{row[key]}}" alt="" style="width: 50px;"></td>
+                } @else {
+                  @if (row[key] == null){
+                    <td>N/A</td>
+
+                  } @else {
+                    <td>{{row[key]}}</td>
+                  }
+                }
               }
               <td>
                 <a [routerLink]="['/admin/update', tableName, row['id']]" class="btn btn-outline-warning">Update  <i class="fa fa-pen"></i></a>
