@@ -14,6 +14,7 @@ import { RolesComponent } from './components/roles/roles.component';
 import { PricesComponent } from './components/prices/prices.component';
 import { PicturesComponent } from './components/pictures/pictures.component';
 import { CategoryspecificationsComponent } from './components/categoryspecifications/categoryspecifications.component';
+import {FormsModule} from "@angular/forms";
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { CategoryspecificationsComponent } from './components/categoryspecificat
   ],
   imports: [
     CommonModule,
-    AdminTableRoutingModule
+    AdminTableRoutingModule,
+    FormsModule
   ]
 })
 export class AdminTableModule { }

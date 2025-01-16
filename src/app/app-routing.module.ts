@@ -22,6 +22,10 @@ const routes: Routes = [
         loadChildren: () => import('./admin-table/admin-table.module').then(m => m.AdminTableModule)
       },
       {
+        path: 'insert',
+        loadChildren: () => import('./admin-insert/admin-insert.module').then(m => m.AdminInsertModule)
+      },
+      {
         path: '**', // Catch-all for admin routes
         component: NotFoundComponent
       }
