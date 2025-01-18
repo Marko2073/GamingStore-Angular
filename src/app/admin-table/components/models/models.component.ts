@@ -12,6 +12,9 @@ export class ModelsComponent implements  OnInit{
   tableName: string | null = null;
   response: any = [];
   keys: string[] = [];
+  InsertKeys: string[] = [];
+  UpdateKeys: string[] = [];
+  data: any = {};
 
   constructor(private route: ActivatedRoute, private http: HttpClient) { }
 
@@ -30,6 +33,15 @@ export class ModelsComponent implements  OnInit{
     });
 
     this.keys=['id','name','brandName', 'categoryName']
+    this.InsertKeys = ['name','brandName', 'categoryName'];
+    this.UpdateKeys = ['id','name','brandName', 'categoryName'];
+
+    this.getData('http://localhost:5083/api/brands').subscribe(response => {
+      this.data['brand'] = response;
+    });
+    this.getData('http://localhost:5083/api/categories').subscribe(response => {
+      this.data['category'] = response;
+    });
 
   }
 

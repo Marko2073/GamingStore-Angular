@@ -13,6 +13,8 @@ export class BrandsComponent implements  OnInit{
   tableName: string | null = null;
   response: any = [];
   keys: string[] = [];
+  InsertKeys: string[] = [];
+  UpdateKeys: string[] = [];
 
   constructor(private route: ActivatedRoute, private http: HttpClient) { }
 
@@ -28,6 +30,8 @@ export class BrandsComponent implements  OnInit{
     });
 
     this.keys=['id', 'name']
+    this.InsertKeys = ['name'];
+    this.UpdateKeys = ['id', 'name'];
 
   }
 
