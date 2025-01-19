@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, model, OnInit} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
@@ -12,6 +12,9 @@ export class ModelversionsComponent implements  OnInit{
   tableName: string | null = null;
   response: any = [];
   keys: string[] = [];
+  InsertKeys: string[] = [];
+  UpdateKeys: string[] = [];
+  data: any = {};
 
   constructor(private route: ActivatedRoute, private http: HttpClient) { }
 
@@ -30,6 +33,12 @@ export class ModelversionsComponent implements  OnInit{
     });
 
     this.keys=['id','brandName','modelName', 'stockQuantity']
+    this.InsertKeys=['modelName', 'stockQuantity']
+    this.UpdateKeys=['id','modelName', 'stockQuantity']
+
+    this.getData(`http://localhost:5083/api/models`).subscribe(response => {
+      this.data['model'] = response;
+    });
 
   }
 

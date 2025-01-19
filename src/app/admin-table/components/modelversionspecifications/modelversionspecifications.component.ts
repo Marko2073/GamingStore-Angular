@@ -12,6 +12,9 @@ export class ModelversionspecificationsComponent implements  OnInit{
   tableName: string | null = null;
   response: any = [];
   keys: string[] = [];
+  InsertKeys: string[] = [];
+  UpdateKeys: string[] = [];
+  data: any = {};
 
   constructor(private route: ActivatedRoute, private http: HttpClient) { }
 
@@ -30,6 +33,19 @@ export class ModelversionspecificationsComponent implements  OnInit{
     });
 
     this.keys=['id','modelVersionName','specificationParent', 'specificationValue']
+    this.InsertKeys=['modelVersionName', 'specificationParent', 'specificationValue']
+    this.UpdateKeys=['id','modelVersionName', 'specificationParent', 'specificationValue']
+
+    this.getData(`http://localhost:5083/api/modelversions`).subscribe(response => {
+      this.data['modelVersion'] = response;
+      console.log(this.data['modelVersion']);
+    });/*
+    this.getData(`http://localhost:5083/api/specifications`).subscribe(response => {
+      this.data['specification'] = response.filter((specification: any) => specification.parentName === null);
+    });*/
+
+
+
 
   }
 

@@ -12,18 +12,18 @@ export class AdminTableComponent {
   @Input() InsertKeys: string[] = [];
   @Input() UpdateKeys: string[] = [];
   @Input() data: any = {};
-
+  formData:any = {};
 
   isModalOpen = false;
   modalType: 'Insert' | 'Update' | null = null;
   selectedRow: any = null;
 
   openModal(type: 'Insert' | 'Update', row?: any): void {
-    console.log(row);
     this.modalType = type;
     this.selectedRow = row || null;
     this.isModalOpen = true;
-    console.log(this.selectedRow);
+    console.log(this.data);
+    console.log(this.InsertKeys);
   }
 
   closeModal(): void {

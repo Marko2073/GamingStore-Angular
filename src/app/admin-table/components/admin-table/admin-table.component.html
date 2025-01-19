@@ -43,14 +43,30 @@
       <h6 class="mb-4">{{modalType}}</h6>
       <div class="form-floating mb-3">
         @if(modalType === 'Insert'){
-
           <div *ngFor="let key of InsertKeys" class="form-floating mb-3">
-            <input type="text" class="form-control" id="floatingInput{{key}}"
-                   >
-            <label for="floatingInput{{key}}">{{key}}</label>
-          </div>
+            <ng-container *ngIf="key.endsWith('Name')">
+              <div class="form-floating">
+                <select class="form-select" id="floatingSelect{{ key }}" >
+                  <option value="" selected disabled>Open menu to select...</option>
 
-        } @else {
+                  <option *ngFor="let d of data[key.slice(0, -4)]" [value]="d.id" >
+                    {{ d.name }}
+                  </option>
+                </select>
+                <label for="floatingSelect{{ key }}">{{ key }}</label>
+              </div>
+            </ng-container>
+            <ng-container *ngIf="!key.endsWith('Name')">
+              <input
+                class="form-control"
+                id="floatingInput{{ key }}"
+              />
+              <label for="floatingInput{{ key }}">{{ key }}</label>
+            </ng-container>
+          </div>
+        }
+
+        @else {
           <div *ngFor="let key of UpdateKeys" class="form-floating mb-3">
             <ng-container *ngIf="key.endsWith('Name')">
               <div class="form-floating">
@@ -73,8 +89,6 @@
               <label for="floatingInput{{ key }}">{{ key }}</label>
             </ng-container>
           </div>
-
-
 
         }
 
