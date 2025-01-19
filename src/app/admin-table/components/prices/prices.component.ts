@@ -15,6 +15,7 @@ export class PricesComponent implements  OnInit{
   keys: string[] = [];
   InsertKeys: string[] = [];
   UpdateKeys: string[] = [];
+  data: any = {};
 
   constructor(private route: ActivatedRoute, private http: HttpClient) { }
 
@@ -32,6 +33,10 @@ export class PricesComponent implements  OnInit{
     this.keys=['id', 'modelVersionName', 'value', 'dateFrom', 'dateTo']
     this.InsertKeys=['modelVersionName', 'value', 'dateFrom', 'dateTo']
     this.UpdateKeys=['id', 'modelVersionName', 'value', 'dateFrom', 'dateTo']
+
+    this.getData('http://localhost:5083/api/modelversions').subscribe(response => {
+      this.data['modelVersion'] = response;
+    });
   }
 
   getData(url: string): Observable<any> {
