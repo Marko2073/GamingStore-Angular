@@ -13,6 +13,8 @@ export class UsersComponent implements  OnInit{
   tableName: string | null = null;
   response: any = [];
   keys: string[] = [];
+  InsertKeys: string[] = [];
+    UpdateKeys: string[] = [];
 
   constructor(private route: ActivatedRoute, private http: HttpClient) { }
 
@@ -29,6 +31,8 @@ export class UsersComponent implements  OnInit{
     });
 
     this.keys=['id', 'firstName', 'lastName', 'email', 'city', 'address', 'phone', 'path']
+    this.InsertKeys=['firstName', 'lastName', 'email', 'city', 'address', 'phone', 'path']
+    this.UpdateKeys=['id', 'firstName', 'lastName', 'email', 'city', 'address', 'phone', 'path']
 
   }
 

@@ -44,7 +44,7 @@
       <div class="form-floating mb-3">
         @if(modalType === 'Insert'){
           <div *ngFor="let key of InsertKeys" class="form-floating mb-3">
-            <ng-container *ngIf="key.endsWith('Name')">
+            @if(key.endsWith('Name') && key != 'firstName' && key != 'lastName'){
               <div class="form-floating">
                 <select class="form-select" id="floatingSelect{{ key }}" >
                   <option value="" selected disabled>Open menu to select...</option>
@@ -55,20 +55,56 @@
                 </select>
                 <label for="floatingSelect{{ key }}">{{ key }}</label>
               </div>
-            </ng-container>
-            <ng-container *ngIf="!key.endsWith('Name')">
+            }
+            @else if (key.endsWith('Value')){
+              <div class="form-floating">
+                <select class="form-select" id="floatingSelect{{ key }}" >
+                  <option value="" selected disabled>Open menu to select...</option>
+
+                  <option *ngFor="let d of data[key]" [value]="d.id" >
+                    {{ d.name }}
+                  </option>
+                </select>
+                <label for="floatingSelect{{ key }}">{{ key }}</label>
+              </div>
+            }
+            @else if (key.endsWith('Parent')){
+              <div class="form-floating">
+                <select class="form-select" id="floatingSelect{{ key }}" (change)="onParentChange($event)">
+                  <option value="" selected disabled>Open menu to select...</option>
+                  <option *ngFor="let option of data[key]" [value]="option.id">
+                    {{ option.name }}
+                  </option>
+                </select>
+
+                <label for="floatingSelect{{ key }}">{{ key }}</label>
+              </div>
+            }
+            @else if (key=='path'){
+              <div class="">
+
+                <input class="form-control bg-dark" type="file" >
+              </div>
+            }
+            @else if (key=='dateFrom' || key=='dateTo'){
+              <div class="form-floating">
+                <input class="form-control bg-dark custom-datetime" type="datetime-local">
+              </div>
+
+            }
+            @else {
               <input
                 class="form-control"
                 id="floatingInput{{ key }}"
               />
               <label for="floatingInput{{ key }}">{{ key }}</label>
-            </ng-container>
+            }
           </div>
         }
 
         @else {
           <div *ngFor="let key of UpdateKeys" class="form-floating mb-3">
-            <ng-container *ngIf="key.endsWith('Name')">
+            @if (key.endsWith('Name') && key != 'firstName' && key != 'lastName'){
               <div class="form-floating">
                 <select class="form-select" id="floatingSelect{{ key }}" [(ngModel)]="selectedRow[key.slice(0, -4)+'Id']">
 
@@ -78,8 +114,43 @@
                 </select>
                 <label for="floatingSelect{{ key }}">{{ key }}</label>
               </div>
-            </ng-container>
-            <ng-container *ngIf="!key.endsWith('Name')">
+            }
+            @else if (key.endsWith('Value')){
+              <div class="form-floating">
+                <select class="form-select" id="floatingSelect{{ key }}" >
+
+                  <option *ngFor="let d of data[key]" [value]="d.id" [selected]="d.name === selectedRow[key]">
+                    {{ d.name }}
+                  </option>
+                </select>
+                <label for="floatingSelect{{ key }}">{{ key }}</label>
+              </div>
+            }
+            @else if (key.endsWith('Parent')){
+              <div class="form-floating">
+                <select class="form-select" id="floatingSelect{{ key }}" (change)="onParentChange($event)">
+                  <option value="" selected disabled>Open menu to select...</option>
+                  <option *ngFor="let option of data[key]" [value]="option.id" [selected]="option.name === selectedRow[key]">
+                    {{ option.name }}
+                  </option>
+                </select>
+
+                <label for="floatingSelect{{ key }}">{{ key }}</label>
+              </div>
+            }
+            @else if (key=='path'){
+              <div class="">
+
+                <input class="form-control bg-dark" type="file" >
+              </div>
+            }
+            @else if (key=='dateFrom' || key=='dateTo'){
+              <div class="form-floating">
+                <input class="form-control bg-dark custom-datetime" type="datetime-local" [value]="selectedRow[key]">
+              </div>
+
+            }
+            @else {
               <input
                 class="form-control"
                 id="floatingInput{{ key }}"
@@ -87,7 +158,8 @@
                 [disabled]="key === 'id'"
               />
               <label for="floatingInput{{ key }}">{{ key }}</label>
-            </ng-container>
+            }
+
           </div>
 
         }

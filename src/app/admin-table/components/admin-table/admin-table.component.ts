@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-admin-table',
@@ -12,23 +12,34 @@ export class AdminTableComponent {
   @Input() InsertKeys: string[] = [];
   @Input() UpdateKeys: string[] = [];
   @Input() data: any = {};
-  formData:any = {};
 
+  @Output() parentChanged: EventEmitter<any> = new EventEmitter<any>();
+
+  formData: any = {};
   isModalOpen = false;
   modalType: 'Insert' | 'Update' | null = null;
   selectedRow: any = null;
+
 
   openModal(type: 'Insert' | 'Update', row?: any): void {
     this.modalType = type;
     this.selectedRow = row || null;
     this.isModalOpen = true;
-    console.log(this.data);
-    console.log(this.InsertKeys);
+    console.log(this.selectedRow);
+    if(type == 'Update') {
+      this.parentChanged.emit(this.selectedRow.parentId);
+    }
   }
 
   closeModal(): void {
     this.isModalOpen = false;
     this.modalType = null;
     this.selectedRow = null;
+  }
+
+  onParentChange(event: Event): void {
+    const target = event.target as HTMLInputElement;
+    const value = target.value;
+    this.parentChanged.emit(value);
   }
 }

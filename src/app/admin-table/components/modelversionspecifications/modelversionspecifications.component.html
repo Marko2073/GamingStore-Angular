@@ -5,5 +5,5 @@
   [InsertKeys]="InsertKeys"
   [UpdateKeys]="UpdateKeys"
   [data]="data"
->
-</app-admin-table>
+  (parentChanged)="handleParentChange($event)"
+></app-admin-table>

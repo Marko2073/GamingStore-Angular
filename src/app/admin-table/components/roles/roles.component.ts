@@ -13,6 +13,9 @@ export class RolesComponent implements  OnInit{
   tableName: string | null = null;
   response: any = [];
   keys: string[] = [];
+  InsertKeys: string[] = [];
+  UpdateKeys: string[] = [];
+  data: any = {};
 
   constructor(private route: ActivatedRoute, private http: HttpClient) { }
 
@@ -28,6 +31,8 @@ export class RolesComponent implements  OnInit{
       console.error('Greška u zahtevima', error);
     });
     this.keys=['id', 'name']
+    this.InsertKeys=['name']
+    this.UpdateKeys=['id', 'name']
   }
 
   getData(url: string): Observable<any> {

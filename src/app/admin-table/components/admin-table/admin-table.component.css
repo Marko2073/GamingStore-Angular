@@ -53,3 +53,29 @@
 
   height: auto;
 }
+
+/* Sakrijte podrazumevanu ikonu, ali zadržite funkcionalnost */
+input[type="datetime-local"]::-webkit-calendar-picker-indicator {
+  opacity: 0; /* Ikona je vizuelno sakrivena */
+  position: absolute;
+  width: 100%; /* Obezbeđuje klikabilnost */
+  height: 100%;
+  cursor: pointer; /* Dodaje pokazivač */
+}
+
+/* Dodajte prilagođenu ikonu preko inputa */
+.custom-datetime {
+  position: relative;
+  padding-right: 40px; /* Prostor za prilagođenu ikonu */
+}
+
+.custom-datetime::after {
+  content: '\1F4C5'; /* Unicode ikona kalendara */
+  font-size: 20px;
+  color: #ffffff; /* Boja prilagođene ikone */
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  pointer-events: none; /* Ikona nije interaktivna, ali underlying funkcionalnost ostaje */
+}

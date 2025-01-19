@@ -13,6 +13,8 @@ export class PricesComponent implements  OnInit{
   tableName: string | null = null;
   response: any = [];
   keys: string[] = [];
+  InsertKeys: string[] = [];
+  UpdateKeys: string[] = [];
 
   constructor(private route: ActivatedRoute, private http: HttpClient) { }
 
@@ -28,6 +30,8 @@ export class PricesComponent implements  OnInit{
       console.error('Greška u zahtevima', error);
     });
     this.keys=['id', 'modelVersionName', 'value', 'dateFrom', 'dateTo']
+    this.InsertKeys=['modelVersionName', 'value', 'dateFrom', 'dateTo']
+    this.UpdateKeys=['id', 'modelVersionName', 'value', 'dateFrom', 'dateTo']
   }
 
   getData(url: string): Observable<any> {
