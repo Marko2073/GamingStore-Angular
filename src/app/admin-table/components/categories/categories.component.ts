@@ -15,6 +15,7 @@ export class CategoriesComponent implements  OnInit{
   InsertKeys: string[] = [];
   UpdateKeys: string[] = [];
   data: any = {};
+  url: string = 'categories';
 
   constructor(private route: ActivatedRoute, private http: HttpClient) { }
 
@@ -24,7 +25,6 @@ export class CategoriesComponent implements  OnInit{
     const url = `http://localhost:5083/api/categories`;
     this.getData(url).subscribe(response => {
       this.response = response;
-      console.log(this.response);
 
 
 

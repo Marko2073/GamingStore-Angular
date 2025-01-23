@@ -15,11 +15,13 @@ export class BrandsComponent implements  OnInit{
   keys: string[] = [];
   InsertKeys: string[] = [];
   UpdateKeys: string[] = [];
+  url: string = 'brands';
 
   constructor(private route: ActivatedRoute, private http: HttpClient) { }
 
   ngOnInit(): void {
     this.tableName = "Brands";
+
 
     const url = `http://localhost:5083/api/brands`;
     this.getData(url).subscribe(response => {

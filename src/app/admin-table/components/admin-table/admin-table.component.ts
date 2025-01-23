@@ -14,6 +14,7 @@ export class AdminTableComponent {
   @Input() InsertKeys: string[] = [];
   @Input() UpdateKeys: string[] = [];
   @Input() data: any = {};
+  @Input() url: string = '';
 
   @Output() parentChanged: EventEmitter<any> = new EventEmitter<any>();
 
@@ -25,6 +26,13 @@ export class AdminTableComponent {
   selectedRow: any = null;
   errors: any = {};
   deleteError: string | null = null;
+
+  token = localStorage.getItem('token');
+  headers = {
+    'Authorization': `Bearer ${this.token}`
+  }
+
+
 
 
   openModal(type: 'Insert' | 'Update', row?: any): void {
@@ -61,10 +69,16 @@ export class AdminTableComponent {
   }
 
   Insert(): void {
-    this.postData(`http://localhost:5083/api/${this.tableName?.toLowerCase()}`, this.formData).subscribe({
+
+    console.log(this.formData);
+
+
+
+
+    this.postData(`http://localhost:5083/api/${this.url?.toLowerCase()}`, this.formData).subscribe({
       next: (response) => {
-        console.log('Success:', response);
-        this.getData(`http://localhost:5083/api/${this.tableName?.toLowerCase()}`).subscribe((response) => {
+
+        this.getData(`http://localhost:5083/api/${this.url?.toLowerCase()}`).subscribe((response) => {
           this.response = response;
         });
       },
@@ -80,11 +94,12 @@ export class AdminTableComponent {
   }
 
   Update(): void {
-    this.putData(`http://localhost:5083/api/${this.tableName?.toLowerCase()}/${this.selectedRow.id}`, this.selectedRow).subscribe({
+    console.log(this.selectedRow);
+    this.putData(`http://localhost:5083/api/${this.url?.toLowerCase()}/${this.selectedRow.id}`, this.selectedRow).subscribe({
       next: (response) => {
         console.log('Update Success:', response);
         // Refresh the table data after successful update
-        this.getData(`http://localhost:5083/api/${this.tableName?.toLowerCase()}`).subscribe((response) => {
+        this.getData(`http://localhost:5083/api/${this.url?.toLowerCase()}`).subscribe((response) => {
           this.response = response;
           console.log('Updated Data:', this.response);
         });
@@ -102,25 +117,21 @@ export class AdminTableComponent {
   }
 
   DeleteRow(row: number): void {
-    this.http.delete(`http://localhost:5083/api/${this.tableName?.toLowerCase()}/${row}`).subscribe({
+    this.http.delete(`http://localhost:5083/api/${this.url?.toLowerCase()}/${row}`).subscribe({
       next: (response) => {
-        console.log('Delete Success:', response);
-        // Refresh the table data after successful deletion
-        this.getData(`http://localhost:5083/api/${this.tableName?.toLowerCase()}`).subscribe((response) => {
+        this.getData(`http://localhost:5083/api/${this.url?.toLowerCase()}`).subscribe((response) => {
           this.response = response;
-          console.log('Updated Data:', this.response);
         });
       },
       error: (err) => {
-        // Set the error message and open the delete error modal
         this.deleteError = err.error ? err.error.error : 'An error occurred during deletion.';
-        console.error('Delete Error:', this.deleteError);
+
       }
     });
   }
 
   closeDeleteErrorModal(): void {
-    this.deleteError = null; // Close the delete error modal
+    this.deleteError = null;
   }
 
 

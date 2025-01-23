@@ -16,6 +16,7 @@ export class RolesComponent implements  OnInit{
   InsertKeys: string[] = [];
   UpdateKeys: string[] = [];
   data: any = {};
+  url: string = 'roles';
 
   constructor(private route: ActivatedRoute, private http: HttpClient) { }
 

@@ -61,7 +61,7 @@
           <div *ngFor="let key of InsertKeys" class="form-floating mb-3">
             @if(key.endsWith('Name') && key != 'firstName' && key != 'lastName'){
               <div class="form-floating">
-                <select class="form-select" id="floatingSelect{{ key }}" >
+                <select class="form-select" id="floatingSelect{{ key }}" [(ngModel)]="formData[key.slice(0,-4)+'Id']">
                   <option value="" selected disabled>Open menu to select...</option>
 
                   <option *ngFor="let d of data[key.slice(0, -4)]" [value]="d.id" >
@@ -73,7 +73,7 @@
             }
             @else if (key.endsWith('Value')){
               <div class="form-floating">
-                <select class="form-select" id="floatingSelect{{ key }}" >
+                <select class="form-select" id="floatingSelect{{ key }}" [(ngModel)]="formData['specificationId']">
                   <option value="" selected disabled>Open menu to select...</option>
 
                   <option *ngFor="let d of data[key]" [value]="d.id" >
@@ -111,7 +111,7 @@
               <input
                 class="form-control"
                 id="floatingInput{{ key }}"
-                [(ngModel)]="formData['name']"
+                [(ngModel)]="formData[key]"
               />
               <label for="floatingInput{{ key }}">{{ key }}</label>
             }
@@ -140,7 +140,7 @@
             }
             @else if (key.endsWith('Value')){
               <div class="form-floating">
-                <select class="form-select" id="floatingSelect{{ key }}" >
+                <select class="form-select" id="floatingSelect{{ key }}" [(ngModel)]="selectedRow['specificationId']">
 
                   <option *ngFor="let d of data[key]" [value]="d.id" [selected]="d.name === selectedRow[key]">
                     {{ d.name }}

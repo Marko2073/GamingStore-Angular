@@ -16,6 +16,7 @@ export class ModelversionspecificationsComponent implements OnInit {
   UpdateKeys: string[] = [];
   data: any = {};
   catSpec: any = [];
+  url: string = 'modelversionspecifications';
 
   constructor(private route: ActivatedRoute, private http: HttpClient) {}
 

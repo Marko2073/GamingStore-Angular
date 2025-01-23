@@ -4,8 +4,22 @@
     <div class="col-lg-6 d-none d-lg-block">
       <div class="d-inline-flex align-items-center h-100">
 
-
-
+        @if (!isLoggedIn()){
+          <a href="login" class="btn btn-outline-primary me-2">
+            Login
+          </a>
+          <a href="register" class="btn btn-primary">
+            Register
+          </a>
+        }
+        @if (isLoggedIn()){
+          <button  class="btn btn-primary mx-2" (click)="Logout()">
+            Logout
+          </button>
+          <a href="profile" class="btn btn-primary">
+            Previous Orders
+          </a>
+        }
 
 
       </div>
@@ -13,10 +27,16 @@
     <div class="col-lg-6 text-center text-lg-right">
       <div class="d-inline-flex align-items-center d-block d-lg-none">
         <a href="/cart" class="btn px-0 ml-2">
-          <i class="fa fa-shopping-cart text-dark"></i>
+          <i class="fa fa-shopping-cart text-dark"></i> Cart
         </a>
       </div>
-
+      @if(this.isAdmin()){
+        <div class="d-lg-flex justify-content-end align-items-center">
+          <a href="/admin" class="btn btn-outline-primary ml-auto">
+            Admin Panel
+          </a>
+        </div>
+      }
 
     </div>
   </div>
@@ -58,19 +78,13 @@
           <div class="navbar-nav mr-auto py-0">
             <a routerLink="home" routerLinkActive="active" class="nav-item nav-link">Home</a>
             <a routerLink="shop" routerLinkActive="active" class="nav-item nav-link">Shop</a>
-            <a routerLink="cart" routerLinkActive="active" class="nav-item nav-link">Cart</a>
-            <a routerLink="login" routerLinkActive="active" class="nav-item nav-link">Login</a>
-            <a routerLink="checkout" routerLinkActive="active" class="nav-item nav-link">Checkout</a>
-            <a routerLink="register" routerLinkActive="active" class="nav-item nav-link">Register</a>
-            <a routerLink="builder" routerLinkActive="active" class="nav-item nav-link">PC Builder</a>
-            <a routerLink="admin" routerLinkActive="active" class="nav-item nav-link">Admin</a>
-
+            <a routerLink="contact" routerLinkActive="active" class="nav-item nav-link">Contact</a>
 
           </div>
           <div class="navbar-nav ml-auto py-0 d-none d-lg-block">
 
             <a href="/cart" class="btn px-0 ml-3">
-              <i class="fa fa-shopping-cart text-primary" style="margin-right: 5px"></i>
+              <i class="fa fa-shopping-cart me-2" style="margin-right: 5px"></i>Cart
             </a>
           </div>
         </div>

@@ -15,11 +15,13 @@ export class ModelsComponent implements  OnInit{
   InsertKeys: string[] = [];
   UpdateKeys: string[] = [];
   data: any = {};
+  url: string = 'models';
 
   constructor(private route: ActivatedRoute, private http: HttpClient) { }
 
   ngOnInit(): void {
     this.tableName = "Models";
+
 
     const url = `http://localhost:5083/api/models`;
     this.getData(url).subscribe(response => {
