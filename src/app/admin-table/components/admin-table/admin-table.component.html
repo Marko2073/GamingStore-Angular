@@ -27,11 +27,26 @@
             <button class="btn btn-outline-warning" (click)="openModal('Update', row)">Update <i class="fa fa-pen"></i></button>
           </td>
           <td>
-            <button class="btn btn-outline-danger">Delete <i class="fa fa-trash"></i></button>
+            <button class="btn btn-outline-danger" (click)="DeleteRow(row['id'])">Delete <i class="fa fa-trash"></i></button>
           </td>
         </tr>
         </tbody>
       </table>
+    </div>
+  </div>
+</div>
+
+<div class="modal-backdrop" *ngIf="deleteError" (click)="closeDeleteErrorModal()">
+  <div class="modal bg-secondary rounded border border-opacity-10 border-primary" (click)="$event.stopPropagation()">
+    <div class="h-100 p-4">
+      <h6 class="mb-4 text-center">Error</h6>
+      <div class="alert alert-primary text-center">
+        <p>{{ deleteError }}</p>
+      </div>
+      <div class="modal-footer mt-3">
+        <button class="btn btn-outline-primary w-100 m-2" (click)="closeDeleteErrorModal()">Close</button>
+
+      </div>
     </div>
   </div>
 </div>
@@ -96,10 +111,18 @@
               <input
                 class="form-control"
                 id="floatingInput{{ key }}"
+                [(ngModel)]="formData['name']"
               />
               <label for="floatingInput{{ key }}">{{ key }}</label>
             }
           </div>
+
+          <div class="alert alert-danger text-center" *ngIf="errors && errors.length > 0">
+            <ul class="list-unstyled">
+              <li *ngFor="let error of errors">{{ error.error }}</li>
+            </ul>
+          </div>
+
         }
 
         @else {
@@ -161,6 +184,12 @@
             }
 
           </div>
+          <div class="alert alert-danger text-center" *ngIf="errors && errors.length > 0">
+            <ul class="list-unstyled">
+              <li *ngFor="let error of errors">{{ error.error }}</li>
+            </ul>
+          </div>
+
 
         }
 
@@ -170,7 +199,7 @@
 
       <div class="modal-footer mt-3">
         <button class="btn btn-secondary" (click)="closeModal()">Close</button>
-        <button class="btn btn-primary" >Save</button>
+        <button class="btn btn-primary" (click)="SaveChanges()">Save</button>
       </div>
     </div>
   </div>

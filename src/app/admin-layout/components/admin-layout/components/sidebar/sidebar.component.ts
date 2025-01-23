@@ -7,9 +7,10 @@ import {Observable} from "rxjs";
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.css'
 })
-export class SidebarComponent {
+export class SidebarComponent implements OnInit {
   public apiUrl = ' http://localhost:5083/api/tables';
   public niz: any = [];
+  public nizLogs: any = [];
   constructor(private http: HttpClient) {}
 
   getPosts(): Observable<any> {
@@ -17,11 +18,17 @@ export class SidebarComponent {
 
   }
   ngOnInit(): void {
+    this.getPosts().subscribe((data: any[]) => {
 
-    this.getPosts().subscribe((data) => {
-      this.niz = data;
+
+      data.forEach((item) => {
+        if (typeof item.name === 'string' && item.name.endsWith('Logs')) {
+          this.nizLogs.push(item); // Dodaj u nizLogs
+        } else {
+          this.niz.push(item); // Dodaj u niz
+        }
+      });
     });
-
   }
 
 

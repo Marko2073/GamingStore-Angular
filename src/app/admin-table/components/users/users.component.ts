@@ -15,6 +15,7 @@ export class UsersComponent implements  OnInit{
   keys: string[] = [];
   InsertKeys: string[] = [];
     UpdateKeys: string[] = [];
+    data: any = {};
 
   constructor(private route: ActivatedRoute, private http: HttpClient) { }
 
@@ -30,9 +31,13 @@ export class UsersComponent implements  OnInit{
       console.error('Greška u zahtevima', error);
     });
 
-    this.keys=['id', 'firstName', 'lastName', 'email', 'city', 'address', 'phone', 'path']
-    this.InsertKeys=['firstName', 'lastName', 'email', 'city', 'address', 'phone', 'path']
-    this.UpdateKeys=['id', 'firstName', 'lastName', 'email', 'city', 'address', 'phone', 'path']
+    this.keys=['id', 'firstName', 'lastName', 'email', 'city', 'address', 'phone', 'path', 'roleName']
+    this.InsertKeys=['firstName', 'lastName', 'email', 'city', 'address', 'phone', 'path', 'roleName']
+    this.UpdateKeys=['id', 'firstName', 'lastName', 'email', 'city', 'address', 'phone', 'path', 'roleName']
+
+    this.getData('http://localhost:5083/api/roles').subscribe(response => {
+      this.data['role'] = response;
+    });
 
   }
 

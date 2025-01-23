@@ -13,6 +13,9 @@ export class PicturesComponent implements  OnInit{
   tableName: string | null = null;
   response: any = [];
   keys: string[] = [];
+  InsertKeys: string[] = [];
+  UpdateKeys: string[] = [];
+  data: any = {};
 
   constructor(private route: ActivatedRoute, private http: HttpClient) { }
 
@@ -28,6 +31,13 @@ export class PicturesComponent implements  OnInit{
       console.error('Greška u zahtevima', error);
     });
     this.keys=['id', 'modelVersionName', 'path']
+    this.InsertKeys=['modelVersionName', 'path']
+    this.UpdateKeys=['id', 'modelVersionName', 'path']
+
+    this.getData('http://localhost:5083/api/modelversions').subscribe(response => {
+      this.data['modelVersion'] = response;
+    });
+
   }
 
   getData(url: string): Observable<any> {

@@ -12,6 +12,9 @@ export class CategoryspecificationsComponent implements  OnInit{
   tableName: string | null = null;
   response: any = [];
   keys: string[] = [];
+  InsertKeys: string[] = [];
+  UpdateKeys: string[] = [];
+  data: any = {};
 
   constructor(private route: ActivatedRoute, private http: HttpClient) { }
 
@@ -30,6 +33,16 @@ export class CategoryspecificationsComponent implements  OnInit{
     });
 
     this.keys=['id','specificationName', 'categoryName']
+    this.InsertKeys=['specificationName', 'categoryName']
+    this.UpdateKeys=['id','specificationName', 'categoryName']
+
+    this.getData('http://localhost:5083/api/categories').subscribe(response => {
+      this.data['category'] = response.filter((category: any) => category.parentName === null);
+    });
+
+    this.getData('http://localhost:5083/api/specifications').subscribe(response => {
+      this.data['specification'] = response.filter((specification: any) => specification.parentName === null);
+    });
 
   }
   getData(url: string): Observable<any> {
