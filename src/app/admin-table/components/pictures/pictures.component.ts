@@ -16,6 +16,7 @@ export class PicturesComponent implements  OnInit{
   InsertKeys: string[] = [];
   UpdateKeys: string[] = [];
   data: any = {};
+  url:string='pictures'
 
   constructor(private route: ActivatedRoute, private http: HttpClient) { }
 

@@ -98,12 +98,13 @@
             @else if (key=='path'){
               <div class="">
 
-                <input class="form-control bg-dark" type="file" >
+                <input class="form-control bg-dark"  type="file"
+                       (change)="onFileSelected($event)">
               </div>
             }
             @else if (key=='dateFrom' || key=='dateTo'){
               <div class="form-floating">
-                <input class="form-control bg-dark custom-datetime" type="datetime-local">
+                <input class="form-control bg-dark custom-datetime" type="datetime-local" [(ngModel)]="formData[key]">
               </div>
 
             }
@@ -164,12 +165,13 @@
             @else if (key=='path'){
               <div class="">
 
-                <input class="form-control bg-dark" type="file" >
+                <input class="form-control bg-dark"  type="file"
+                       (change)="onFileSelected($event)">
               </div>
             }
             @else if (key=='dateFrom' || key=='dateTo'){
               <div class="form-floating">
-                <input class="form-control bg-dark custom-datetime" type="datetime-local" [value]="selectedRow[key]">
+                <input class="form-control bg-dark custom-datetime" type="datetime-local" [value]="selectedRow[key]" >
               </div>
 
             }

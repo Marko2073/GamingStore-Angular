@@ -16,6 +16,7 @@ export class PricesComponent implements  OnInit{
   InsertKeys: string[] = [];
   UpdateKeys: string[] = [];
   data: any = {};
+  url:string= 'prices'
 
   constructor(private route: ActivatedRoute, private http: HttpClient) { }
 

@@ -25,6 +25,10 @@ export class LayoutComponent {
   ngOnInit(): void {
     this.loadStyle('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css');
     this.loadStyle('https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css');
+    this.loadStyle('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css')
+    this.loadScript('https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js');
+
+    /*this.loadStyle('/assets/css/bootstrap.min.css');*/
 
 
   }

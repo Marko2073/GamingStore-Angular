@@ -20,12 +20,14 @@ export class AdminTableComponent {
 
   constructor(private http: HttpClient) { }
 
+
   formData: any = {};
   isModalOpen = false;
   modalType: 'Insert' | 'Update' | null = null;
   selectedRow: any = null;
   errors: any = {};
   deleteError: string | null = null;
+  selectedFile: File | null = null;
 
   token = localStorage.getItem('token');
   headers = {
@@ -72,48 +74,101 @@ export class AdminTableComponent {
 
     console.log(this.formData);
 
+    if(this.tableName=='Pictures'){
+      const formData1 = new FormData();
+      if(this.selectedFile)
+      formData1.append('PicturePath', this.selectedFile);
+      formData1.append('ModelVersionId', this.formData['modelVersionId'] )
+      this.postData(`http://localhost:5083/api/${this.url?.toLowerCase()}`, formData1).subscribe({
+        next: (response) => {
+
+          this.getData(`http://localhost:5083/api/${this.url?.toLowerCase()}`).subscribe((response) => {
+            this.response = response;
+          });
+        },
+        error: (err) => {
+          this.errors = err.error;
+          console.error(this.errors.property+":", this.errors.error);
+        },
+        complete: () => {
+          this.closeModal();
+          this.errors = {};
+        },
+      });
+    }
+    else{
+      this.postData(`http://localhost:5083/api/${this.url?.toLowerCase()}`, this.formData).subscribe({
+        next: (response) => {
+
+          this.getData(`http://localhost:5083/api/${this.url?.toLowerCase()}`).subscribe((response) => {
+            this.response = response;
+          });
+        },
+        error: (err) => {
+          this.errors = err.error;
+          console.error(this.errors.property+":", this.errors.error);
+        },
+        complete: () => {
+          this.closeModal();
+          this.errors = {};
+        },
+      });
+    }
 
 
 
-    this.postData(`http://localhost:5083/api/${this.url?.toLowerCase()}`, this.formData).subscribe({
-      next: (response) => {
 
-        this.getData(`http://localhost:5083/api/${this.url?.toLowerCase()}`).subscribe((response) => {
-          this.response = response;
-        });
-      },
-      error: (err) => {
-        this.errors = err.error;
-        console.error(this.errors.property+":", this.errors.error);
-      },
-      complete: () => {
-        this.closeModal();
-        this.errors = {};
-      },
-    });
   }
 
   Update(): void {
     console.log(this.selectedRow);
-    this.putData(`http://localhost:5083/api/${this.url?.toLowerCase()}/${this.selectedRow.id}`, this.selectedRow).subscribe({
-      next: (response) => {
-        console.log('Update Success:', response);
-        // Refresh the table data after successful update
-        this.getData(`http://localhost:5083/api/${this.url?.toLowerCase()}`).subscribe((response) => {
-          this.response = response;
-          console.log('Updated Data:', this.response);
-        });
-      },
-      error: (err) => {
-        // Store the errors for display
-        this.errors = err.error;
-        console.error('Update Error:', this.errors);
-      },
-      complete: () => {
-        this.closeModal();
-        this.errors = {};
-      }
-    });
+    if(this.tableName=='Pictures'){
+      const formData1 = new FormData();
+      if(this.selectedFile)
+        formData1.append('PicturePath', this.selectedFile);
+      formData1.append('ModelVersionId', this.selectedRow['modelVersionId'] )
+      this.putData(`http://localhost:5083/api/${this.url?.toLowerCase()}/${this.selectedRow.id}`, formData1).subscribe({
+        next: (response) => {
+          console.log('Update Success:', response);
+          // Refresh the table data after successful update
+          this.getData(`http://localhost:5083/api/${this.url?.toLowerCase()}`).subscribe((response) => {
+            this.response = response;
+            console.log('Updated Data:', this.response);
+          });
+        },
+        error: (err) => {
+          // Store the errors for display
+          this.errors = err.error;
+          console.error('Update Error:', this.errors);
+        },
+        complete: () => {
+          this.closeModal();
+          this.errors = {};
+        }
+      });
+    }
+    else {
+      this.putData(`http://localhost:5083/api/${this.url?.toLowerCase()}/${this.selectedRow.id}`, this.selectedRow).subscribe({
+        next: (response) => {
+          console.log('Update Success:', response);
+          // Refresh the table data after successful update
+          this.getData(`http://localhost:5083/api/${this.url?.toLowerCase()}`).subscribe((response) => {
+            this.response = response;
+            console.log('Updated Data:', this.response);
+          });
+        },
+        error: (err) => {
+          // Store the errors for display
+          this.errors = err.error;
+          console.error('Update Error:', this.errors);
+        },
+        complete: () => {
+          this.closeModal();
+          this.errors = {};
+        }
+      });
+    }
+
   }
 
   DeleteRow(row: number): void {
@@ -133,10 +188,6 @@ export class AdminTableComponent {
   closeDeleteErrorModal(): void {
     this.deleteError = null;
   }
-
-
-
-
   postData(url: string, formData:any): Observable<any> {
     return this.http.post<any>(url, formData);
   }
@@ -146,4 +197,13 @@ export class AdminTableComponent {
   putData(url: string, formData:any): Observable<any> {
     return this.http.put<any>(url, formData);
   }
+
+  onFileSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length > 0) {
+      this.selectedFile = input.files[0];
+    }
+  }
+
+
 }

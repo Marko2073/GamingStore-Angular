@@ -15,6 +15,7 @@ export class CategoryspecificationsComponent implements  OnInit{
   InsertKeys: string[] = [];
   UpdateKeys: string[] = [];
   data: any = {};
+  url:string="categoryspecifications"
 
   constructor(private route: ActivatedRoute, private http: HttpClient) { }
 
@@ -37,7 +38,7 @@ export class CategoryspecificationsComponent implements  OnInit{
     this.UpdateKeys=['id','specificationName', 'categoryName']
 
     this.getData('http://localhost:5083/api/categories').subscribe(response => {
-      this.data['category'] = response.filter((category: any) => category.parentName === null);
+      this.data['category'] = response.filter((category: any) => category.parentName != null);
     });
 
     this.getData('http://localhost:5083/api/specifications').subscribe(response => {
