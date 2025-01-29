@@ -22,10 +22,9 @@ export class HeaderComponent {
   isAdmin(): boolean {
     if (this.token) { // Provera da li token postoji
       this.decodedToken = this.jwtHelper.decodeToken(this.token);
-      console.log(this.decodedToken);
       return this.isLoggedIn() && this.decodedToken?.RoleId == 10;
     }
-    return false; // Ako token ne postoji, korisnik nije admin
+    return false;
   }
   Logout() {
     // Endpoint for logout API
@@ -40,11 +39,12 @@ export class HeaderComponent {
     this.http.delete(apiUrl, { headers }).subscribe(
       () => {
         localStorage.removeItem('token');
-        localStorage.removeItem('role');
         this.router.navigate(['/login']);
       },
       (error) => {
         console.error('Error logging out:', error);
+        localStorage.removeItem('token');
+
 
       }
     );
