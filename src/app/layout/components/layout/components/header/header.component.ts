@@ -13,6 +13,10 @@ export class HeaderComponent {
   private jwtHelper = new JwtHelperService();
   private decodedToken: any;
   token: string | null = localStorage.getItem('token');
+  ngOnInit(): void {
+    this.isLoggedIn();
+    this.isAdmin();
+  }
 
   constructor(private http: HttpClient, private router: Router) {
   }

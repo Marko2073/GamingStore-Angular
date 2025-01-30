@@ -18,7 +18,7 @@
     <!-- Shop Sidebar Start -->
     <div class="col-lg-3 col-md-4">
 
-      <div class="accordion" id="accordionExample">
+      <div class="accordion pb-2" id="accordionExample">
         <!-- Price Filter Accordion -->
         <div class="accordion-item">
           <h2 class="accordion-header" id="headingPrice">
@@ -204,9 +204,7 @@
                 <img class="img-fluid w-100" src="http://localhost:5083/images/{{ x.pictures[0].path}}" alt="{{ x.pictures[0].modelVersionName}}">
                 <div class="product-action">
                   <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-shopping-cart"></i></a>
-                  <a class="btn btn-outline-dark btn-square" href=""><i class="far fa-heart"></i></a>
-                  <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-sync-alt"></i></a>
-                  <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-search"></i></a>
+                  <a class="btn btn-outline-dark btn-square" href="/shop/{{x.id}}"><i class="fa fa-search"></i></a>
                 </div>
               </div>
               <div class="text-center py-4">

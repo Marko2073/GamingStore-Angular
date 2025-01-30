@@ -1,0 +1,19 @@
+#tabelaSingl {
+  width: 80%; /* Prosirite tabelu na 80% širine roditeljskog elementa */
+  border-collapse: collapse; /* Spojite granice ćelija */
+}
+
+.spec-row {
+  background-color: #f2f2f2; /* Siva pozadinska boja za svaki red */
+}
+
+.spec-value,
+.spec-name {
+  padding: 10px; /* Dodajte malo odmaka unutar ćelija */
+  font-size: 1.2em; /* Povećajte veličinu fonta */
+  border: 1px solid #ddd; /* Dodajte 1px solidnu ivicu svakoj ćeliji */
+}
+
+.spec-value {
+  width: 30%; /* Širina 30% za prvu kolonu */
+}
