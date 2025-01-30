@@ -46,7 +46,7 @@ const routes: Routes = [
         loadChildren: () => import('./home/home.module').then(m => m.HomeModule)
       },
       {
-        path: 'shop/:id',
+        path: 'shop/:category/:id',
         loadChildren: () => import('./single/single.module').then(m => m.SingleModule)
       },
       {
@@ -57,6 +57,7 @@ const routes: Routes = [
         path: 'shop',
         loadChildren: () => import('./shop/shop.module').then(m => m.ShopModule)
       },
+
       {
         path: 'login',
         loadChildren: () => import('./login/login.module').then(m => m.LoginModule)
@@ -72,6 +73,10 @@ const routes: Routes = [
       {
         path: 'builder',
         loadChildren: () => import('./builder/builder.module').then(m => m.BuilderModule)
+      },
+      {
+        path: 'builder/:category',
+        loadChildren: () => import('./component/component.module').then(m => m.ComponentModule)
       },
       {
         path: '**', // Catch-all for shop routes

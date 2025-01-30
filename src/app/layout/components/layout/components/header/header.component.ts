@@ -13,7 +13,14 @@ export class HeaderComponent {
   private jwtHelper = new JwtHelperService();
   private decodedToken: any;
   token: string | null = localStorage.getItem('token');
+  categories: any = [];
   ngOnInit(): void {
+
+    this.http.get('http://localhost:5083/api/categories').subscribe((response: any) => {
+      this.categories = response.filter((category: any) => category.parentId != null);
+    });
+
+
     this.isLoggedIn();
     this.isAdmin();
   }

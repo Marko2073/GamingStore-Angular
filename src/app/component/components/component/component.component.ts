@@ -3,23 +3,29 @@ import {ActivatedRoute} from "@angular/router";
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 
-@Component({
-  selector: 'app-builder',
-  templateUrl: './builder.component.html',
-  styleUrl: './builder.component.css'
-})
-export class BuilderComponent {
 
+
+@Component({
+  selector: 'app-component',
+  templateUrl: './component.component.html',
+  styleUrl: './component.component.css'
+})
+export class ComponentComponent {
   response: any = [];
+  catId: any;
 
   constructor(private route: ActivatedRoute, private http: HttpClient) { }
 
+
   ngOnInit(): void {
 
+    this.catId = this.route.snapshot.paramMap.get('category');
+    console.log(this.catId);
 
-    const url = `http://localhost:5083/api/categories`;
+
+    const url = `http://localhost:5083/api/products?categoryId=${this.catId}`;
     this.getData(url).subscribe(response => {
-      this.response = response.filter((item: any) => item.parentId != null);
+      this.response = response;
       console.log(this.response);
 
     }, error => {

@@ -4,8 +4,8 @@
     <div class="col-12">
       <nav class="breadcrumb bg-light mb-30">
         <a class="breadcrumb-item text-dark" href="/home">Home</a>
-        <a class="breadcrumb-item text-dark" href="/shop">Shop</a>
-        <span class="breadcrumb-item active">Shop List</span>
+        <a class="breadcrumb-item text-dark" href="/builder">PC Builder</a>
+        <span class="breadcrumb-item active">Componets</span>
       </nav>
     </div>
   </div>
@@ -20,34 +20,51 @@
 
       <div class="accordion pb-2" id="accordionExample">
         <!-- Price Filter Accordion -->
-        @if(!this.Category){
-          <!-- Filter by Category Accordion -->
-            <!-- Filter by Category Accordion -->
-          <div class="accordion-item">
-            <h2 class="accordion-header" id="headingCategory">
-              <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseCategory" aria-expanded="true" aria-controls="collapseCategory">
-                Filter by Category
-              </button>
-            </h2>
-            <div id="collapseCategory" class="accordion-collapse collapse show" aria-labelledby="headingCategory" data-bs-parent="#accordionExample">
-              <div class="accordion-body">
-                <div class="bg-light p-4 mb-30">
-                  <form>
-                    @for(c of Categories; track $index) {
-                      <a class="d-block text-decoration-none text-dark p-2 mb-2" href="/shop/{{ c.name }}">
-                        {{ c.name }}
-                        <span class="badge badge-pill bg-light float-right text-muted border">300</span>
-                      </a>
-                    }
-                  </form>
-                </div>
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="headingPrice">
+            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapsePrice" aria-expanded="true" aria-controls="collapsePrice">
+              Filter by Price
+            </button>
+          </h2>
+          <div id="collapsePrice" class="accordion-collapse collapse show" aria-labelledby="headingPrice" data-bs-parent="#accordionExample">
+            <div class="accordion-body">
+              <div class="bg-light p-4 mb-30">
+                <form>
+                  <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
+                    <input type="checkbox" class="custom-control-input" checked id="price-all">
+                    <label class="custom-control-label" for="price-all">All Price</label>
+                    <span class="badge border font-weight-normal">1000</span>
+                  </div>
+                  <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
+                    <input type="checkbox" class="custom-control-input" id="price-1">
+                    <label class="custom-control-label" for="price-1">$0 - $100</label>
+                    <span class="badge border font-weight-normal">150</span>
+                  </div>
+                  <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
+                    <input type="checkbox" class="custom-control-input" id="price-2">
+                    <label class="custom-control-label" for="price-2">$100 - $200</label>
+                    <span class="badge border font-weight-normal">295</span>
+                  </div>
+                  <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
+                    <input type="checkbox" class="custom-control-input" id="price-3">
+                    <label class="custom-control-label" for="price-3">$200 - $300</label>
+                    <span class="badge border font-weight-normal">246</span>
+                  </div>
+                  <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
+                    <input type="checkbox" class="custom-control-input" id="price-4">
+                    <label class="custom-control-label" for="price-4">$300 - $400</label>
+                    <span class="badge border font-weight-normal">145</span>
+                  </div>
+                  <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between">
+                    <input type="checkbox" class="custom-control-input" id="price-5">
+                    <label class="custom-control-label" for="price-5">$400 - $500</label>
+                    <span class="badge border font-weight-normal">168</span>
+                  </div>
+                </form>
               </div>
             </div>
           </div>
-
-
-        }
-
+        </div>
 
         <!-- Color Filter Accordion -->
         <div class="accordion-item">
@@ -56,7 +73,7 @@
               Filter by Color
             </button>
           </h2>
-          <div id="collapseColor" class="accordion-collapse collapse show" aria-labelledby="headingColor" data-bs-parent="#accordionExample">
+          <div id="collapseColor" class="accordion-collapse collapse" aria-labelledby="headingColor" data-bs-parent="#accordionExample">
             <div class="accordion-body">
               <div class="bg-light p-4 mb-30">
                 <form>
@@ -103,7 +120,7 @@
               Filter by Size
             </button>
           </h2>
-          <div id="collapseSize" class="accordion-collapse collapse " aria-labelledby="headingSize" data-bs-parent="#accordionExample">
+          <div id="collapseSize" class="accordion-collapse collapse" aria-labelledby="headingSize" data-bs-parent="#accordionExample">
             <div class="accordion-body">
               <div class="bg-light p-4 mb-30">
                 <form>
@@ -154,11 +171,8 @@
     <div class="col-lg-9 col-md-8">
       <div class="row pb-3">
         <div class="col-12 pb-1">
-          <div class="d-flex align-items-center justify-content-between mb-4">
-            <div>
-              <button class="btn btn-sm btn-light" (click)="toggleLayout(true)"><i class="fa fa-th-large"></i></button>
-              <button class="btn btn-sm btn-light ml-2" (click)="toggleLayout(false)"><i class="fa fa-bars"></i></button>
-            </div>
+          <div class="d-flex align-items-center justify-content-end mb-4">
+
             <div class="ml-2">
               <div class="btn-group">
                 <button type="button" class="btn btn-sm btn-light dropdown-toggle" data-toggle="dropdown">Sorting</button>
@@ -179,95 +193,66 @@
             </div>
           </div>
         </div>
-        @if(response.length==0){
-          <div class="col-12">
-            <div class="alert alert-danger text-center">No products found</div>
-          </div>
-        }
-        @if(isThreeColumns){
 
-        @for(x of response; track $index){
-          <div class="col-lg-4 col-md-6 col-sm-6 pb-1">
-            <div class="product-item bg-light mb-4">
-              <div class="product-img position-relative overflow-hidden">
-                <img class="img-fluid w-100" src="http://localhost:5083/images/{{ x.pictures[0].path}}" alt="{{ x.pictures[0].modelVersionName}}">
-                <div class="product-action">
-                  <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-shopping-cart"></i></a>
-                  <a class="btn btn-outline-dark btn-square" href="/shop/{{x.id}}"><i class="fa fa-search"></i></a>
+        <div class="col-12 pb-3">
+          @if(response.length == 0){
+            <div class="alert alert-danger" role="alert">
+              No products found.
+            </div>
+          }
+          @for (x of response; track $index){
+            <div class="product-item bg-light mb-4 p-3">
+              <div class="row">
+                <!-- Slika proizvoda -->
+                <div class="col-md-4">
+                  <img class="img-fluid w-100" src="http://localhost:5083/images/{{ x.pictures[0].path }}" alt="{{ x.pictures[0].modelVersionName }}">
                 </div>
-              </div>
-              <div class="text-center py-4">
-                <a class="h6 text-decoration-none text-truncate" href="">{{x.brandName}} {{x.modelName}}</a>
-                <div class="d-flex align-items-center justify-content-center mt-2">
-                  <h5>${{x.price}}</h5><h6 class="text-muted ml-2"><del>${{x.price*1.2}}</del></h6>
-                </div>
-                <div class="d-flex align-items-center justify-content-center mb-1">
-                  <small class="fa fa-star text-primary mr-1"></small>
-                  <small class="fa fa-star text-primary mr-1"></small>
-                  <small class="fa fa-star text-primary mr-1"></small>
-                  <small class="fa fa-star text-primary mr-1"></small>
-                  <small class="fa fa-star text-primary mr-1"></small>
-                  <small>(99)</small>
+
+                <!-- Detalji proizvoda -->
+                <div class="col-md-8">
+                  <div class="text-left">
+                    <a class="h5 text-decoration-none text-truncate d-block mb-2" href="/shop/{{x.id}}">
+                      {{ x.pictures[0].modelVersionName }}
+                    </a>
+
+                    <div class="d-flex align-items-center justify-content-start mt-2">
+                      <h5>${{x.price}}</h5>
+                      <h6 class="text-muted ml-2"><del>${{x.price*1.2}}</del></h6>
+                    </div>
+
+                    <div class="d-flex align-items-center justify-content-start mb-2">
+                      <small class="fa fa-star text-primary mr-1"></small>
+                      <small class="fa fa-star text-primary mr-1"></small>
+                      <small class="fa fa-star text-primary mr-1"></small>
+                      <small class="fa fa-star text-primary mr-1"></small>
+                      <small class="fa fa-star text-primary mr-1"></small>
+                      <small>(99)</small>
+                    </div>
+
+                    <!-- Prostor za dodatne specifikacije -->
+                    <p class="mb-2">
+                      @for (y of x.specifications; track $index){
+                        <strong>{{ y.parentName }}:</strong> {{ y.name }} <br>
+                      }
+                    </p>
+
+                    <div class="d-flex align-items-center justify-content-start">
+                      <button class="btn btn-primary">➕ Add to Configuration</button>
+                    </div>
+
+
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        }
-        } @else {
-          <div class="col-12 pb-3">
+          }
 
-            @for (x of response; track $index){
-              <div class="product-item bg-light mb-4 p-3">
-                <div class="row">
-                  <!-- Slika proizvoda -->
-                  <div class="product-img position-relative overflow-hidden col-md-4">
-                    <img class="img-fluid w-100" src="http://localhost:5083/images/{{ x.pictures[0].path}}" alt="{{ x.pictures[0].modelVersionName}}">
-                    <div class="product-action">
-                      <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-shopping-cart"></i></a>
-                      <a class="btn btn-outline-dark btn-square" href="/shop/{{x.id}}"><i class="fa fa-search"></i></a>
-                    </div>
-                  </div>
-
-                  <!-- Detalji proizvoda -->
-                  <div class="col-md-8">
-                    <div class="text-left">
-                      <a class="h5 text-decoration-none text-truncate d-block mb-2" href="/shop/{{x.id}}">
-                        {{ x.pictures[0].modelVersionName }}
-                      </a>
-
-                      <div class="d-flex align-items-center justify-content-start mt-2">
-                        <h5>${{x.price}}</h5>
-                        <h6 class="text-muted ml-2"><del>${{x.price*1.2}}</del></h6>
-                      </div>
-
-                      <div class="d-flex align-items-center justify-content-start mb-2">
-                        <small class="fa fa-star text-primary mr-1"></small>
-                        <small class="fa fa-star text-primary mr-1"></small>
-                        <small class="fa fa-star text-primary mr-1"></small>
-                        <small class="fa fa-star text-primary mr-1"></small>
-                        <small class="fa fa-star text-primary mr-1"></small>
-                        <small>(99)</small>
-                      </div>
-
-                      <!-- Prostor za dodatne specifikacije -->
-                      <p class="mb-2">
-                        @for (y of x.specifications; track $index){
-                          <strong>{{ y.parentName }}:</strong> {{ y.name }} <br>
-                        }
-                      </p>
+        </div>
 
 
 
 
 
-                    </div>
-                  </div>
-                </div>
-              </div>
-            }
-
-          </div>
-        }
 
 
         <div class="col-12">

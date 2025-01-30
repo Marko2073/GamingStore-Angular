@@ -12,6 +12,7 @@ import {JwtHelperService} from "@auth0/angular-jwt";
 export class LoginComponent {
   loginForm: FormGroup;
   loginError: string="";
+  IsLoggedIn: boolean = false;
 
   private jwtHelper = new JwtHelperService();
   private decodedToken: any;
@@ -36,6 +37,7 @@ export class LoginComponent {
         localStorage.setItem('token', token);
         console.log(token);
         this.decodedToken = this.jwtHelper.decodeToken(token);
+        this.IsLoggedIn = true;
 
         this.router.navigate(['/shop']);
 

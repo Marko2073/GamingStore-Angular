@@ -50,14 +50,3 @@
   color: white;
 }
 
-.pc-builder-add-btn {
-  background-color: #1a73e8;
-  color: white;
-  border: none;
-  padding: 5px 10px;
-  cursor: pointer;
-}
-
-.pc-builder-add-btn:hover {
-  background-color: #145bb5;
-}

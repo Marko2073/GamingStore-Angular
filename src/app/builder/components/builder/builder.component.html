@@ -1,90 +1,34 @@
-<div id="pc-builder-container">
-  <!-- Custom Header Bar -->
-  <div id="pc-builder-header-bar">
-    <span class="pc-builder-url">https://pcbuilder.net/figs/GaWkr</span>
-    <button id="pc-builder-new-list-btn" class="pc-builder-btn">New List</button>
-    <div id="pc-builder-country-select">Select Country: <strong>United States</strong></div>
-    <div id="pc-builder-compatibility-status">Compatibility: No issues or incompatibilities found.</div>
-    <div id="pc-builder-estimated-wattage">⚡ Estimated Wattage: 0W</div>
+<div class="container mt-4">
+  <!-- Header Bar -->
+  <div class="d-flex justify-content-between align-items-center bg-dark text-white p-3 rounded shadow-sm">
+
+    <div class="fw-bold">✅ Compatibility: No issues</div>
+    <div class="fw-bold">⚡ Estimated Wattage: <span class="text-warning">0W</span></div>
   </div>
 
-  <!-- Custom Table -->
-  <table id="pc-builder-table">
-    <thead>
-    <tr>
-      <th>Component</th>
-      <th>Product</th>
-      <th>Title</th>
-      <th>Price</th>
-      <th>Remove </th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr>
-      <td>Processor</td>
-      <td><button class="pc-builder-add-btn">+ ADD Component</button></td>
-      <td></td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr>
-      <td>Motherboard</td>
-      <td><button class="pc-builder-add-btn">+ ADD Component</button></td>
-      <td></td>
-      <td></td>
-      <td></td>
-    </tr>
-    <!-- Repeat for other components -->
-    <tr>
-      <td>CPU Cooler</td>
-      <td><button class="pc-builder-add-btn">+ ADD Component</button></td>
-      <td></td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr>
-      <td>Case</td>
-      <td><button class="pc-builder-add-btn">+ ADD Component</button></td>
-      <td></td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr>
-      <td>Graphics Card</td>
-      <td><button class="pc-builder-add-btn">+ ADD Component</button></td>
-      <td></td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr>
-      <td>RAM</td>
-      <td><button class="pc-builder-add-btn">+ ADD Component</button></td>
-      <td></td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr>
-      <td>Storage</td>
-      <td><button class="pc-builder-add-btn">+ ADD Component</button></td>
-      <td></td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr>
-      <td>Power Supply</td>
-      <td><button class="pc-builder-add-btn">+ ADD Component</button></td>
-      <td></td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr>
-      <td>Monitor</td>
-      <td><button class="pc-builder-add-btn">+ ADD Component</button></td>
-      <td></td>
-      <td></td>
-      <td></td>
-    </tr>
-
-    </tbody>
-  </table>
+  <!-- Table -->
+  <div class="table-responsive mt-4">
+    <table class="table table-hover table-striped shadow-sm rounded">
+      <thead class="bg-dark text-white">
+      <tr>
+        <th>Component</th>
+        <th>Product</th>
+        <th>Title</th>
+        <th>Price</th>
+        <th>Remove</th>
+      </tr>
+      </thead>
+      <tbody>
+        @for (x of response; track $index){
+          <tr class="align-middle">
+            <td class="fw-bold">{{ x.name }}</td>
+            <td><a class="btn btn-primary" href="builder/{{x.id}}">➕ Add Component</a></td>
+            <td>-</td>
+            <td>-</td>
+            <td><button class="btn btn-danger">🗑 Remove</button></td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
 </div>
