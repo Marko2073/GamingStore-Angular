@@ -1,0 +1,109 @@
+<div class="row px-xl-5">
+  <div class="col-12">
+    <nav class="breadcrumb bg-light mb-30">
+      <a class="breadcrumb-item text-dark" href="/home">Home</a>
+      <span class="breadcrumb-item active">Profile</span>
+    </nav>
+  </div>
+</div>
+<div class="row px-xl-5">
+  <div class="col">
+    <div class="bg-light p-30">
+      <div class="nav nav-tabs mb-4">
+        <a class="nav-item nav-link text-dark active" id="ordersDetails1" data-toggle="tab" href="#tab-pane-1">About user</a>
+        <a class="nav-item nav-link text-dark" id="ordersDetails" data-toggle="tab" href="#tab-pane-2">Order details</a>
+      </div>
+      <div class="tab-content">
+        <div class="tab-pane fade show active" id="tab-pane-1">
+          <div id="profile" class="row h-100">
+            <div class="col-xl-4 h-100" >
+
+              <div class="card mb-4 mb-xl-0">
+                <div class="card-header">Profile Picture</div>
+                <div class="card-body text-center ">
+
+                  <img class="img-account-profile rounded-circle mb-2" style="width: 150px"  src="http://localhost:5083/images/{{response.path}}" alt>
+
+                  <div class="small font-italic text-muted mb-4">JPG or PNG no larger than 5 MB</div>
+                  <form action="" method="POST" enctype="multipart/form-data">
+
+
+                    <input type="file" name="path" class="form-control mb-4">
+                    <input type="submit" value="Save changes" class="btn btn-primary">
+                  </form>
+
+                </div>
+              </div>
+            </div>
+            <div class="col-xl-8 h-100" >
+
+              <div class="card mb-4">
+                <div class="card-header">Account Details</div>
+                <div class="card-body">
+                  <form action="" method="POST">
+
+
+
+
+                    <div class="row">
+                      <div class="col-md-6 form-group">
+                        <label>First Name</label>
+                        <input class="form-control" type="text" placeholder="John" name="firstname" value="{{response.firstName}}">
+                      </div>
+                      <div class="col-md-6 form-group">
+                        <label>Last Name</label>
+                        <input class="form-control" type="text" placeholder="Doe" name="lastname" value="{{response.lastName}}">
+                      </div>
+                      <div class="col-md-6 form-group">
+                        <label>E-mail</label>
+                        <input class="form-control" type="text" placeholder="example@email.com" name="email" value="{{response.email}}">
+                      </div>
+                      <div class="col-md-6 form-group">
+                        <label>Mobile No</label>
+                        <input class="form-control" type="text" placeholder="+123 456 789" name="phone" value="{{response.phone}}">
+                      </div>
+                      <div class="col-md-6 form-group">
+                        <label>Address Line 1</label>
+                        <input class="form-control" type="text" placeholder="123 Street" name="address" value="{{response.address}}">
+                      </div>
+
+                      <div class="col-md-6 form-group">
+                        <label>City</label>
+                        <input class="form-control" type="text" placeholder="New York" name="city" value="{{response.city}}">
+                      </div>
+
+
+
+                    </div>
+
+                    <input class="btn btn-primary" type="submit" value="Save changes">
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="tab-pane fade" id="tab-pane-2">
+
+
+          <div class="card mb-4">
+            <div class="card-header">Order History</div>
+            <div class="card-body p-0">
+
+              <div class="table-responsive table-billing-history">
+
+                <div id="accordion">
+
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

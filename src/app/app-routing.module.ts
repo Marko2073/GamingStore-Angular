@@ -79,6 +79,10 @@ const routes: Routes = [
         loadChildren: () => import('./component/component.module').then(m => m.ComponentModule)
       },
       {
+        path: 'profile',
+        loadChildren: () =>import('./profile/profile.module').then(m=>m.ProfileModule)
+      },
+      {
         path: '**', // Catch-all for shop routes
         component: NotFoundComponent
       }
