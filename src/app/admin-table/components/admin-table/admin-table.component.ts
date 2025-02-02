@@ -147,6 +147,69 @@ export class AdminTableComponent {
         }
       });
     }
+    else if(this.tableName=='Users'){
+      if(this.selectedFile){
+        const formData1 = new FormData();
+        formData1.append('Path', this.selectedFile);
+        formData1.append('FirstName', this.selectedRow.firstName);
+        formData1.append('LastName', this.selectedRow.lastName);
+        formData1.append('Email', this.selectedRow.email);
+        formData1.append('City', this.selectedRow.city);
+        formData1.append('Address', this.selectedRow.address);
+        formData1.append('Phone', this.selectedRow.phone);
+        formData1.append('RoleId', this.selectedRow.roleId);
+        this.putData(`http://localhost:5083/api/${this.url?.toLowerCase()}/${this.selectedRow.id}`, formData1).subscribe({
+          next: (response) => {
+            console.log('Update Success:', response);
+            // Refresh the table data after successful update
+            this.getData(`http://localhost:5083/api/${this.url?.toLowerCase()}`).subscribe((response) => {
+              this.response = response;
+              console.log('Updated Data:', this.response);
+            });
+          },
+          error: (err) => {
+            // Store the errors for display
+            this.errors = err.error;
+            console.error('Update Error:', this.errors);
+          },
+          complete: () => {
+            this.closeModal();
+            this.errors = {};
+          }
+        });
+      }
+      else {
+        const formData1 = new FormData();
+        formData1.append('FirstName', this.selectedRow.firstName);
+        formData1.append('LastName', this.selectedRow.lastName);
+        formData1.append('Email', this.selectedRow.email);
+        formData1.append('City', this.selectedRow.city);
+        formData1.append('Address', this.selectedRow.address);
+        formData1.append('Phone', this.selectedRow.phone);
+        formData1.append('RoleId', this.selectedRow.roleId);
+        this.putData(`http://localhost:5083/api/${this.url?.toLowerCase()}/${this.selectedRow.id}`, formData1).subscribe({
+          next: (response) => {
+            console.log('Update Success:', response);
+            // Refresh the table data after successful update
+            this.getData(`http://localhost:5083/api/${this.url?.toLowerCase()}`).subscribe((response) => {
+              this.response = response;
+              console.log('Updated Data:', this.response);
+            });
+          },
+          error: (err) => {
+            // Store the errors for display
+            this.errors = err.error;
+            console.error('Update Error:', this.errors);
+          },
+          complete: () => {
+            this.closeModal();
+            this.errors = {};
+          }
+        });
+
+      }
+
+    }
     else {
       this.putData(`http://localhost:5083/api/${this.url?.toLowerCase()}/${this.selectedRow.id}`, this.selectedRow).subscribe({
         next: (response) => {

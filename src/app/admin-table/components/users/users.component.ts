@@ -16,6 +16,7 @@ export class UsersComponent implements  OnInit{
   InsertKeys: string[] = [];
     UpdateKeys: string[] = [];
     data: any = {};
+    url: string = 'users';
 
   constructor(private route: ActivatedRoute, private http: HttpClient) { }
 

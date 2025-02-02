@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from "@angular/router";
-import { HttpClient } from "@angular/common/http";
-import { Observable } from "rxjs";
-import { switchMap } from 'rxjs/operators';
+import { ActivatedRoute, Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { switchMap, catchError } from 'rxjs/operators';
 
 @Component({
   selector: 'app-shop',
@@ -10,45 +10,67 @@ import { switchMap } from 'rxjs/operators';
   styleUrls: ['./shop.component.css']
 })
 export class ShopComponent implements OnInit {
-  response: any = [];
+  response: any[] = [];
   Category: string = '';
-  Categories: any = [];
+  Categories: any[] = [];
+  isThreeColumns: boolean = true;
 
-  constructor(private route: ActivatedRoute, private http: HttpClient) { }
+  constructor(
+    private route: ActivatedRoute,
+    private http: HttpClient,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
-    this.route.params.pipe(
-      switchMap(params => {
-        this.Category = params['category'];
-        console.log('Kategorija:', this.Category);
-        const url = this.Category ?
-          `http://localhost:5083/api/products/?CategoryName=${this.Category}` :
-          `http://localhost:5083/api/products`; // Ovo je URL za sve proizvode
-        return this.getData(url);
-      })
-    ).subscribe(response => {
-      this.response = response;
-      console.log(this.response);
-    }, error => {
-      console.error('Greška u zahtevima', error);
-    });
-
-    if(!this.Category){
-      this.http.get('http://localhost:5083/api/categories').subscribe((response: any) => {
-        this.Categories = response.filter((category: any) => category.parentId != null);
-        console.log(this.Categories);
-      });
-    }
+    this.loadCategories();
+    this.loadProducts();
   }
 
-  getData(url: string): Observable<any> {
+  private loadCategories(): void {
+    this.http.get<any[]>('http://localhost:5083/api/categories').subscribe(
+      (categories) => {
+        this.Categories = categories.filter((category) => category.parentId != null);
+      },
+      (error) => console.error('Error loading categories', error)
+    );
+  }
+
+  private loadProducts(): void {
+    this.route.params.pipe(
+      switchMap((params) => {
+        this.Category = params['category'];
+
+        if (this.Category) {
+          return this.http.get<any[]>('http://localhost:5083/api/categories').pipe(
+            switchMap((categories) => {
+              this.Categories = categories.filter((category) => category.name === this.Category);
+
+              if (this.Categories.length === 0) {
+                this.router.navigate(['**']);
+                return new Observable<any[]>();
+              }
+
+              return this.getData(`http://localhost:5083/api/products/?CategoryName=${this.Category}`);
+            })
+          );
+        }
+
+        return this.getData('http://localhost:5083/api/products');
+      }),
+      catchError((error) => {
+        console.error('Error fetching products', error);
+        return new Observable<any[]>();
+      })
+    ).subscribe((response) => {
+      this.response = response;
+    });
+  }
+
+  private getData(url: string): Observable<any> {
     return this.http.get<any>(url);
   }
 
-  isThreeColumns: boolean = true;
-
-  // Ova funkcija menja raspored prikaza na osnovu parametra
-  toggleLayout(isThreeColumns: boolean) {
+  toggleLayout(isThreeColumns: boolean): void {
     this.isThreeColumns = isThreeColumns;
   }
 }

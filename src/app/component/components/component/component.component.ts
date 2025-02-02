@@ -23,7 +23,7 @@ export class ComponentComponent {
     console.log(this.catId);
 
 
-    const url = `http://localhost:5083/api/products?categoryId=${this.catId}`;
+    const url = `http://localhost:5083/api/products?categoryName=${this.catId}`;
     this.getData(url).subscribe(response => {
       this.response = response;
       console.log(this.response);

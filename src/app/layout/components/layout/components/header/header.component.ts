@@ -25,7 +25,14 @@ export class HeaderComponent {
     this.isAdmin();
   }
 
+
   constructor(private http: HttpClient, private router: Router) {
+    this.router.events.subscribe(() => {
+      this.token = localStorage.getItem('token');
+      this.isLoggedIn();
+      this.isAdmin();
+
+    })
   }
   isLoggedIn(): boolean {
     return localStorage.getItem('token') !== null;

@@ -2,56 +2,61 @@
 <div class="container-fluid">
   <div class="row bg-secondary py-1 px-xl-5">
     <div class="col-lg-6 d-none d-lg-block">
-      <div class="d-inline-flex align-items-center h-100">
-
-        @if (!isLoggedIn()){
-          <a href="login" class="btn btn-outline-primary me-2">
-            Login
-          </a>
-          <a href="register" class="btn btn-primary">
-            Register
-          </a>
-        }
-        @if (isLoggedIn()){
-          <button  class="btn btn-primary mx-2" (click)="Logout()">
-            Logout
-          </button>
-          <a href="profile" class="btn btn-primary">
-            Previous Orders
-          </a>
-        }
-
-
+      <div class="d-flex align-items-center h-100 ">
+        <div class="btn-group">
+          <button type="button" class="btn btn-sm btn-light dropdown-toggle" data-toggle="dropdown">My Account</button>
+          <div class="dropdown-menu dropdown-menu-right">
+            @if(!isLoggedIn()){
+              <a href="/login" class="dropdown-item" type="button">Sign in <i class="fas fa-sign-in-alt"></i></a>
+              <a href="/register" class="dropdown-item" type="button">Sign up <i class="fas fa-user-plus"></i></a>
+            }
+            @else{
+              <a href="/profile" class="dropdown-item" type="button">Profile <i class="fas fa-user"></i> </a>
+              <button class="dropdown-item" type="button" (click)="Logout()">Logout <i class="fas fa-sign-out-alt"></i></button>
+              @if(isAdmin()){
+                <a href="/admin" class="dropdown-item" type="button">Admin Panel <i class="fas fa-user-shield"></i></a>
+              }
+            }
+          </div>
+        </div>
       </div>
     </div>
     <div class="col-lg-6 text-center text-lg-right">
       <div class="d-inline-flex align-items-center d-block d-lg-none">
+        <div class="btn-group pr-3">
+          <button type="button" class="btn btn-sm btn-light dropdown-toggle" data-toggle="dropdown">My Account</button>
+          <div class="dropdown-menu dropdown-menu-right">
+            @if(!isLoggedIn()){
+              <a href="/login" class="dropdown-item" type="button">Sign in <i class="fas fa-sign-in-alt"></i></a>
+              <a href="/register" class="dropdown-item" type="button">Sign up <i class="fas fa-user-plus"></i></a>
+            }
+            @else{
+              <a href="/profile" class="dropdown-item" type="button">Profile <i class="fas fa-user"></i> </a>
+              <button class="dropdown-item" type="button" (click)="Logout()">Logout <i class="fas fa-sign-out-alt"></i></button>
+              @if(isAdmin()){
+                <a href="/admin" class="dropdown-item" type="button">Admin Panel <i class="fas fa-user-shield"></i></a>
+              }
+            }
+          </div>
+        </div>
         <a href="/cart" class="btn px-0 ml-2">
           <i class="fa fa-shopping-cart text-dark"></i> Cart
         </a>
+
       </div>
-      @if(this.isAdmin()){
-        <div class="d-lg-flex justify-content-end align-items-center">
-          <a href="/admin" class="btn btn-outline-primary ml-auto">
-            Admin Panel
-          </a>
-        </div>
-      }
 
     </div>
   </div>
   <div class="row align-items-center bg-light py-3 px-xl-5 d-none d-lg-flex">
     <div class="col-lg-4">
       <a href="" class="text-decoration-none">
-        <span class="h1 text-uppercase text-primary bg-dark px-2">Laptop</span>
-        <span class="h1 text-uppercase text-dark bg-primary px-2 ml-n1">Shop</span>
+        <span class="h1 text-uppercase text-primary bg-dark px-2">Gaming</span>
+        <span class="h1 text-uppercase text-dark bg-primary px-2 ml-n1">Store</span>
       </a>
     </div>
     <div class="col-lg-4 col-6 text-center">
       <p class="m-0">Free Shipping</p>
       <h5 class="m-0">On order over $999</h5>
-
-
     </div>
     <div class="col-lg-4 col-6 text-right">
       <p class="m-0">Customer Service</p>
@@ -68,8 +73,8 @@
     <div class="col-lg-12">
       <nav class="navbar navbar-expand-lg bg-dark navbar-dark py-3 py-lg-0 px-0">
         <a href="" class="text-decoration-none d-block d-lg-none">
-          <span class="h1 text-uppercase text-dark bg-light px-2">Laptop</span>
-          <span class="h1 text-uppercase text-light bg-primary px-2 ml-n1">Shop</span>
+          <span class="h1 text-uppercase text-dark bg-light px-2">Gaming</span>
+          <span class="h1 text-uppercase text-light bg-primary px-2 ml-n1">Store</span>
         </a>
         <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
           <span class="navbar-toggler-icon"></span>
