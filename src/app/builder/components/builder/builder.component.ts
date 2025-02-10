@@ -28,6 +28,9 @@ export class BuilderComponent {
 
 
   }
+  isLoggedIn() {
+    return localStorage.getItem('token');
+  }
 
   getData(url: string): Observable<any> {
     return this.http.get<any>(url);

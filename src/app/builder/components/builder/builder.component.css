@@ -49,4 +49,17 @@
   background-color: #333;
   color: white;
 }
+.blurred-table {
+  filter: blur(5px);
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.access-denied {
+  z-index: 10;
+  background: rgba(0, 0, 0, 0.9);
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+}
 

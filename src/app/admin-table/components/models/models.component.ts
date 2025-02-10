@@ -42,7 +42,7 @@ export class ModelsComponent implements  OnInit{
       this.data['brand'] = response;
     });
     this.getData('http://localhost:5083/api/categories').subscribe(response => {
-      this.data['category'] = response;
+      this.data['category'] = response.filter((category:any) => category.parentId != null);
     });
 
   }
