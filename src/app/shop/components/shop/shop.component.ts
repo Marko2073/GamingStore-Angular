@@ -14,7 +14,8 @@ export class ShopComponent implements OnInit {
   Category: string = '';
   Categories: any[] = [];
   isThreeColumns: boolean = true;
-
+  cart:any[]= [];
+  showModal: boolean = false;
   constructor(
     private route: ActivatedRoute,
     private http: HttpClient,
@@ -72,5 +73,10 @@ export class ShopComponent implements OnInit {
 
   toggleLayout(isThreeColumns: boolean): void {
     this.isThreeColumns = isThreeColumns;
+  }
+  AddToCart(id:number){
+    console.log(id);
+
+
   }
 }

@@ -1,0 +1,52 @@
+.modal {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-dialog {
+  max-width: 400px; /* Prilagodite širinu prema potrebama */
+}
+
+.modal-content {
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2); /* Dodavanje senke */
+}
+
+.modal-header {
+  background-color: #f8f9fa; /* Boja pozadine zaglavlja */
+  border-bottom: none; /* Uklanjanje donje ivice */
+}
+
+.modal-body, .modal-footer {
+  padding: 20px; /* Dodavanje prostora između sadržaja i ivica */
+}
+
+.modal-footer {
+  border-top: none; /* Uklanjanje gornje ivice */
+}
+
+.modal-title {
+  font-size: 1.25rem; /* Veličina fonta za naslov */
+}
+
+.btn-secondary {
+  background-color: #6c757d; /* Boja pozadine dugmeta */
+  border-color: #6c757d; /* Boja ivice dugmeta */
+  color: #fff; /* Boja teksta dugmeta */
+}
+
+.btn-secondary:hover {
+  background-color: #5a6268; /* Boja pozadine dugmeta pri prelasku mišem */
+  border-color: #545b62; /* Boja ivice dugmeta pri prelasku mišem */
+}
+.modal {
+  display: none; /* čini modal nevidljivim */
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 9999;
+}
+.is-active {
+  display: block; /* čini modal vidljivim */
+}

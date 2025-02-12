@@ -23,6 +23,9 @@ export class AppComponent {
     if(localStorage.getItem('configuration') === null) {
       localStorage.setItem('configuration', JSON.stringify(this.Components));
     }
+    if(localStorage.getItem('cart')===null){
+      localStorage.setItem('cart', JSON.stringify([]))
+    }
   }
 
 }
