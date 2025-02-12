@@ -220,53 +220,7 @@
           <div class="col-12 pb-3">
 
             @for (x of response; track $index){
-              <div class="product-item bg-light mb-4 p-3">
-                <div class="row">
-                  <!-- Slika proizvoda -->
-                  <div class="product-img position-relative overflow-hidden col-md-4">
-                    <img class="img-fluid w-100" src="http://localhost:5083/images/{{ x.pictures[0].path}}" alt="{{ x.pictures[0].modelVersionName}}">
-                    <div class="product-action">
-                      <button class="btn btn-outline-dark btn-square" (click)="AddToCart(x.id)"><i class="fa fa-shopping-cart"></i></button>
-                      <a class="btn btn-outline-dark btn-square" href="/shop/{{x.categoryName}}/{{x.id}}"><i class="fa fa-search"></i></a>
-                    </div>
-                  </div>
-
-                  <!-- Detalji proizvoda -->
-                  <div class="col-md-8">
-                    <div class="text-left">
-                      <a class="h5 text-decoration-none text-truncate d-block mb-2" href="/shop/{{x.id}}">
-                        {{ x.pictures[0].modelVersionName }}
-                      </a>
-
-                      <div class="d-flex align-items-center justify-content-start mt-2">
-                        <h5>${{x.price}}</h5>
-                        <h6 class="text-muted ml-2"><del>${{x.price*1.2}}</del></h6>
-                      </div>
-
-                      <div class="d-flex align-items-center justify-content-start mb-2">
-                        <small class="fa fa-star text-primary mr-1"></small>
-                        <small class="fa fa-star text-primary mr-1"></small>
-                        <small class="fa fa-star text-primary mr-1"></small>
-                        <small class="fa fa-star text-primary mr-1"></small>
-                        <small class="fa fa-star text-primary mr-1"></small>
-                        <small>(99)</small>
-                      </div>
-
-                      <!-- Prostor za dodatne specifikacije -->
-                      <p class="mb-2">
-                        @for (y of x.specifications; track $index){
-                          <strong>{{ y.parentName }}:</strong> {{ y.name }} <br>
-                        }
-                      </p>
-
-
-
-
-
-                    </div>
-                  </div>
-                </div>
-              </div>
+              <app-wcard [product]="x" (addToCartEvent)="showModal = true"></app-wcard>
             }
 
           </div>

@@ -5,6 +5,7 @@ export interface Product {
   modelId:any;
   brandName: any;
   modelVersionId: any;
+  categoryName: any;
   price: any;
   pictures: any[];
   specifications : any[];
