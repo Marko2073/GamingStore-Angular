@@ -1,0 +1,45 @@
+
+<table class="table table-light table-borderless table-hover text-center mb-0">
+  <thead class="thead-dark">
+  <tr>
+    <th>Products</th>
+    <th>Price</th>
+    <th>Quantity</th>
+    <th>Total</th>
+    <th>Remove</th>
+  </tr>
+  </thead>
+  <tbody class="align-middle">
+    @for (product of cartItems; track $index) {
+      <tr>
+        <td class="align-middle"><img src="assets/img/products/{{product.pictures[0].path}}" alt=""
+                                      style="width: 50px;"> {{ product.brandName }} {{ product.modelName }}
+        </td>
+        <td class="align-middle">${{ product.price }}</td>
+        <td class="align-middle">
+          <div class="input-group quantity mx-auto" style="width: 100px;">
+            <div class="input-group-btn">
+              <button class="btn btn-sm btn-primary btn-minus" (click)="MinusItem(product.id)">
+                <i class="fa fa-minus"></i>
+              </button>
+            </div>
+            <input type="text" class="form-control form-control-sm bg-secondary border-0 text-center"
+                   [value]="product.quantity">
+            <div class="input-group-btn">
+              <button class="btn btn-sm btn-primary btn-plus" (click)="PlusItem(product.id)">
+                <i class="fa fa-plus"></i>
+              </button>
+            </div>
+          </div>
+        </td>
+        <td class="align-middle">${{ product.price * product.quantity }}</td>
+        <td class="align-middle">
+          <button class="btn btn-sm btn-danger" (click)="BrisiLs(product.id)"><i class="fa fa-times"></i></button>
+        </td>
+      </tr>
+    }
+
+  </tbody>
+</table>
+
+
