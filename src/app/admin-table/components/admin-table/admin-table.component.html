@@ -8,14 +8,14 @@
       <table class="table">
         <thead>
         <tr>
-          <th *ngFor="let key of keys">{{ key }}</th>
-          <th>Update</th>
-          <th>Delete</th>
+          <th *ngFor="let key of keys" class="text-light">{{ key }}</th>
+          <th class="text-light">Update</th>
+          <th class="text-light">Delete</th>
         </tr>
         </thead>
         <tbody>
         <tr *ngFor="let row of response">
-          <td *ngFor="let key of keys">
+          <td *ngFor="let key of keys" class="text-light">
             <ng-container *ngIf="key === 'path'; else normalCell">
               <img src="http://localhost:5083/images/{{ row[key] }}" alt="" style="width: 50px;">
             </ng-container>
@@ -68,7 +68,7 @@
                     {{ d.name }}
                   </option>
                 </select>
-                <label for="floatingSelect{{ key }}">{{ key }}</label>
+                <label for="floatingSelect{{ key }}" >{{ key }}</label>
               </div>
             }
             @else if (key.endsWith('Value')){

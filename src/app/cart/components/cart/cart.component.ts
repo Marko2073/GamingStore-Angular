@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import {Product} from "../../../shop/interfaces/product";
 import {ProductService} from "../../../shop/buisness-logic/api/products.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-cart',
@@ -12,7 +13,8 @@ export class CartComponent {
   cartSmth: any[] = [];
   products: Product[] = [];
   total: number = 0;
-  constructor(private productService: ProductService) {}
+  showModal: boolean = false;  // Dodali smo modal flag
+  constructor(private productService: ProductService, private router:Router) {}
   ngOnInit(): void {
     const items = localStorage.getItem('cart');
     if (items) {
@@ -64,5 +66,14 @@ export class CartComponent {
     });
     localStorage.setItem('cart', JSON.stringify(this.cartSmth));
     this.updateCartItems();
+  }
+  onCheckoutSuccess() {
+    this.showModal = true;
+  }
+
+  closeModal() {
+    this.showModal = false;
+
+    location.reload();
   }
 }

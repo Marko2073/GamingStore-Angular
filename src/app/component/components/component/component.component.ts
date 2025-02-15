@@ -146,7 +146,6 @@ export class ComponentComponent implements OnInit{
         });
       }
     }
-
     else if(this.catId=="Case"){
       this.configuration=localStorage.getItem('configuration');
       this.configuration=JSON.parse(this.configuration);
@@ -334,7 +333,44 @@ export class ComponentComponent implements OnInit{
         });
       }
     }
+    else if(this.catId== "Ram"){
 
+      this.configuration=localStorage.getItem('configuration');
+      this.configuration=JSON.parse(this.configuration);
+      console.log(this.configuration);
+      if(this.configuration['Motherboard']==''){
+        const url = `http://localhost:5083/api/products?categoryName=${this.catId}`;
+        this.getData(url).subscribe(response => {
+          this.response = response;
+          console.log(this.response);
+
+        }, error => {
+          console.error('Greška u zahtevima', error);
+        });
+      }
+      else {
+        const url = `http://localhost:5083/api/products?ModelVersionId=${this.configuration['Motherboard']}`;
+        console.log(url);
+        this.getData(url).subscribe(response => {
+          this.product = response;
+
+          for (var spec of this.product[0].specifications) {
+            if (spec.parentName == "Ram Type") {
+              const url1 = `http://localhost:5083/api/products?SpecificationIds=${spec.id}&categoryName=${this.catId}`;
+              console.log(url1);
+              this.getData(url1).subscribe(response => {
+                this.response = response;
+                console.log(this.SearchSpec);
+              }, error => {
+                console.error('Greška u zahtevima', error);
+              });
+
+            }
+          }
+        })
+      }
+
+    }
 
 
     else {

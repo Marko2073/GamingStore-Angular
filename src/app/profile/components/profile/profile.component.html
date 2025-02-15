@@ -91,16 +91,49 @@
           <div class="card mb-4">
             <div class="card-header">Order History</div>
             <div class="card-body p-0">
-
               <div class="table-responsive table-billing-history">
-
                 <div id="accordion">
-
+                  <div class="card" *ngFor="let x of carts; let i = index">
+                    <div class="card-header" id="heading{{i}}">
+                      <button class="btn btn-primary" type="button" data-bs-toggle="collapse" [attr.data-bs-target]="'#collapse' + i" aria-expanded="false" [attr.aria-controls]="'collapse' + i">
+                        Order ID: {{ x.id }} - Date: {{ x.createdAt | date: 'dd/MM/yyyy' }}
+                      </button>
+                    </div>
+                    <div [id]="'collapse' + i" class="collapse" data-bs-parent="#accordion">
+                      <div class="card-body">
+              <span class="badge badge-primary" style="font-size: 15px; padding: 10px 10px;">
+                Total Price: {{ x.totalPrice }}$
+              </span>
+                        <table class="table table-borderless table-striped">
+                          <thead>
+                          <tr>
+                            <th>Product</th>
+                            <th>Image</th>
+                            <th>Price</th>
+                            <th>Quantity</th>
+                            <th>Total</th>
+                          </tr>
+                          </thead>
+                          <tbody>
+                          <tr *ngFor="let y of x.cartItems">
+                            <td>{{ y.modelVersionName }}</td>
+                            <td>
+                              <img [src]="'http://localhost:5083/images/' + y.pictures[0].path" style="width: 70px; height: 70px;">
+                            </td>
+                            <td>{{ y.price }}$</td>
+                            <td>{{ y.quantity }}</td>
+                            <td>{{ y.price * y.quantity }}$</td>
+                          </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-
               </div>
             </div>
           </div>
+
         </div>
 
       </div>

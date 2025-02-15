@@ -4,6 +4,7 @@ import {FormBuilder} from "@angular/forms";
 import {HttpClient} from "@angular/common/http";
 import {Router} from "@angular/router";
 import {Observable} from "rxjs";
+import {formatDate} from "@angular/common";
 
 @Component({
   selector: 'app-profile',
@@ -16,6 +17,7 @@ export class ProfileComponent {
   token : any='';
   response : any={};
   id : any;
+  carts : any={};
   constructor(private formBuilder: FormBuilder, private http: HttpClient, private router: Router){
 
   }
@@ -36,6 +38,20 @@ export class ProfileComponent {
       console.error('Greška u zahtevima', error);
     });
 
+    const url1 = `http://localhost:5083/api/carts`;
+    this.getData(url1).subscribe(response => {
+      this.carts = response.map((cart: any) => ({
+        ...cart,
+        isCollapsed: true // Dodaj isCollapsed svojstvo
+      }));
+
+      console.log(this.carts);
+    }, error => {
+      console.error('Greška u zahtevima', error);
+    });
+
+
+
 
 
   }
@@ -44,7 +60,5 @@ export class ProfileComponent {
   }
 
 
-
-
-
+  protected readonly formatDate = formatDate;
 }
