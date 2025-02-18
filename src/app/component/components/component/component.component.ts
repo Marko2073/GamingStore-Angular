@@ -334,7 +334,6 @@ export class ComponentComponent implements OnInit{
       }
     }
     else if(this.catId== "Ram"){
-
       this.configuration=localStorage.getItem('configuration');
       this.configuration=JSON.parse(this.configuration);
       console.log(this.configuration);
@@ -343,7 +342,6 @@ export class ComponentComponent implements OnInit{
         this.getData(url).subscribe(response => {
           this.response = response;
           console.log(this.response);
-
         }, error => {
           console.error('Greška u zahtevima', error);
         });
@@ -371,8 +369,6 @@ export class ComponentComponent implements OnInit{
       }
 
     }
-
-
     else {
       const url = `http://localhost:5083/api/products?categoryName=${this.catId}`;
       this.getData(url).subscribe(response => {
@@ -384,10 +380,6 @@ export class ComponentComponent implements OnInit{
       });
     }
 
-
-
-
-
   }
 
   getData(url: string): Observable<any> {
@@ -395,7 +387,16 @@ export class ComponentComponent implements OnInit{
   }
   DodajUConfiguration(id: any, name: any){
     let configuration = JSON.parse(localStorage.getItem('configuration') || '{}');
-    configuration[name] = id;
+    if(name=='Ram' && configuration['Ram']!=''){
+      configuration['Ram'] += ',' + id;
+    }
+    else if(name=='Storage' && configuration['Storage']!=''){
+      configuration['Storage'] += ',' + id;
+    }
+    else {
+
+      configuration[name] = id;
+    }
     localStorage.setItem('configuration', JSON.stringify(configuration));
     this.router.navigate(['/builder']);
   }

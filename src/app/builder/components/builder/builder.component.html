@@ -18,30 +18,88 @@
         </tr>
         </thead>
         <tbody>
-
           @for (x of response; track $index){
             <tr class="align-middle">
               <td class="fw-bold">{{ x.name }}</td>
               @if(AddedComponents[x.name]){
+
                 <td><img src="http://localhost:5083/images/{{ AddedComponents[x.name].pictures[0].path}}" style="width: 100px"/></td>
                 <td>{{AddedComponents[x.name].brandName}} {{AddedComponents[x.name].modelName}}</td>
-                <td>{{AddedComponents[x.name].price}}</td>
+                <td>{{AddedComponents[x.name].price}} {{x.name=="Ram"? "x"+ NumOfRams: ''}}</td>
 
-              } @else {
+
+              }
+                @else {
                 <td><a class="btn btn-primary" href="builder/{{x.name}}">➕ Add Component</a></td>
                 <td></td>
                 <td>-</td>
-
               }
-              <td><button class="btn btn-danger" (click)="IzbrisiIzConfiguration( x.name)">🗑 Remove</button></td>
-
-
+              <td><button class="btn btn-danger" (click)="IzbrisiIzConfiguration(x.name)">🗑 Remove</button></td>
             </tr>
+            @if(x.name === 'Storage' && AddedComponents['Storage'] && SelectedStorages.length > 0){
+              @for (y of SelectedStorages; track $index){
+              <tr class="align-middle">
+                <td class="fw-bold">Storage</td>
+                <td><img src="http://localhost:5083/images/{{ y.pictures[0].path}}" style="width: 100px"/></td>
+                <td>{{y.brandName}} {{y.modelName}}</td>
+                <td>{{y.price}}</td>
+                <td><button class="btn btn-danger" (click)="IzbrisiIzConfigurationAdditional(y.name, y.id)">🗑 Remove</button></td>
+              </tr>
+              }
+            }
 
+            <!-- Provera za RAM, ako je već dodat, dodaj opciju za dodavanje još jednog -->
+            @if(x.name === 'Ram' && AddedComponents['Ram']){
+              <tr class="align-middle">
+                <td class="fw-bold">Extra RAM Slot</td>
+                <td><a class="btn btn-primary" href="builder/{{x.name}}">➕ Add Another RAM</a></td>
+                <td></td>
+                <td>-</td>
+                <td></td>
+              </tr>
+            }
 
+            <!-- Provera za Storage, ako je već dodat, dodaj opciju za dodavanje još jednog -->
+            @if(x.name === 'Storage' && AddedComponents['Storage']){
+              <tr class="align-middle">
+                <td class="fw-bold">Extra Storage Slot</td>
+                <td><a class="btn btn-primary" href="builder/{{x.name}}">➕ Add Another Storage</a></td>
+                <td></td>
+                <td>-</td>
+                <td></td>
+              </tr>
+            }
           }
+
+
+
+        <!--@for (x of response; track $index){
+          <tr class="align-middle">
+            <td class="fw-bold">{{ x.name }}</td>
+            @if(AddedComponents[x.name]){
+              <td><img src="http://localhost:5083/images/{{ AddedComponents[x.name].pictures[0].path}}" style="width: 100px"/></td>
+              <td>{{AddedComponents[x.name].brandName}} {{AddedComponents[x.name].modelName}}</td>
+              <td>{{AddedComponents[x.name].price}}</td>
+
+            } @else {
+              <td><a class="btn btn-primary" href="builder/{{x.name}}">➕ Add Component</a></td>
+              <td></td>
+              <td>-</td>
+
+            }
+            <td><button class="btn btn-danger" (click)="IzbrisiIzConfiguration( x.name)">🗑 Remove</button></td>
+
+
+          </tr>
+
+
+        }-->
         </tbody>
       </table>
+      <div class="text-center mt-4">
+        <button class="btn btn-success btn-lg" [disabled]="!isConfigurationComplete()" (click)="OrderConfiguration()" >🛒 Order Configuration</button>
+      </div>
+
     </div>
   }
   @else {
