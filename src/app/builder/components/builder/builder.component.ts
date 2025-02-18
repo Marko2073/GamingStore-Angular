@@ -15,6 +15,9 @@ export class BuilderComponent {
   niz: any = [];
   SelectedStorages: any = [];
   nizBrisanje: any = [];
+  formData: any = {};
+  ComponentsForm: any = [];
+  storageComponents: any = [];
 
   response: any = [];
   AddedComponents: any = [];
@@ -100,6 +103,9 @@ export class BuilderComponent {
   getData(url: string): Observable<any> {
     return this.http.get<any>(url);
   }
+  postData(url: string, data: any): Observable<any> {
+    return this.http.post<any>(url, data);
+  }
   IzbrisiIzConfiguration(key: string){
     this.temp = localStorage.getItem('configuration');
     this.temp=JSON.parse(this.temp);
@@ -140,9 +146,59 @@ export class BuilderComponent {
   OrderConfiguration(){
     this.temp = localStorage.getItem('configuration');
     this.temp=JSON.parse(this.temp);
-    console.log(this.temp);
+    var ram = this.temp['Ram'].split(",")[0];
+    var ramquantity = this.temp['Ram'].split(",");
+
+    var storage = this.temp['Storage'].split(",");
+    for (let i = 0; i < storage.length; i++) {
+      if(this.storageComponents.length==0){
+        this.storageComponents.push({ModelVersionId:storage[i], quantity:1});
+      }
+      else {
+        for (let j = 0; j < this.storageComponents.length; j++) {
+          if (this.storageComponents[j].ModelVersionId == storage[i]) {
+            this.storageComponents[j].quantity++;
+            break;
+          } else if (j == this.storageComponents.length - 1) {
+            this.storageComponents.push({ModelVersionId: storage[i], quantity: 1});
+            break;
+          }
+        }}
+
+    }
+    this.formData['Components'] = this.formData['Components'] || []; // Ako nije definisano, postavi na prazan niz
+
+    this.formData['Components'].push({ ModelversionId: this.temp['Processor'], quantity: 1 });
+    this.formData['Components'].push({ ModelversionId: this.temp['Motherboard'], quantity: 1 });
+    this.formData['Components'].push({ ModelversionId: this.temp['Graphics Card'], quantity: 1 });
+
+
+    this.formData['Components'].push({ ModelversionId: ram, quantity: ramquantity.length });
+
+    this.formData['Components'].push({ ModelversionId: this.temp['Case'], quantity: 1 });
+    this.formData['Components'].push({ ModelversionId: this.temp['Power Supply'], quantity: 1 });
+
+
+    if (this.storageComponents.length > 0) {
+      this.formData['Components'].push(...this.storageComponents); // Dodaj sve storage komponente
+    }
+
+    console.log(this.formData);
+
+    this.postData('http://localhost:5083/api/configurations', this.formData).subscribe(response => {
+
+      console.log(response);
+      localStorage.setItem('configuration', JSON.stringify([]));
+      this.router.navigate(['/profile']);
+    });
+
+
+
+
+
+
+
   }
 
 
-  protected readonly sessionStorage = sessionStorage;
 }

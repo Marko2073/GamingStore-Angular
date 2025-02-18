@@ -18,6 +18,7 @@ export class ProfileComponent {
   response : any={};
   id : any;
   carts : any={};
+  configurations : any={};
   constructor(private formBuilder: FormBuilder, private http: HttpClient, private router: Router){
 
   }
@@ -46,6 +47,16 @@ export class ProfileComponent {
       }));
 
       console.log(this.carts);
+    }, error => {
+      console.error('Greška u zahtevima', error);
+    });
+    const url2 = `http://localhost:5083/api/configurations`;
+    this.getData(url2).subscribe(response => {
+      this.configurations = response.map((config: any) => ({
+        ...config,
+        isCollapsed: true // Dodaj isCollapsed svojstvo
+      }));
+      console.log(this.configurations);
     }, error => {
       console.error('Greška u zahtevima', error);
     });

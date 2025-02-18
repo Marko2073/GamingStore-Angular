@@ -74,9 +74,5 @@ export class ShopComponent implements OnInit {
   toggleLayout(isThreeColumns: boolean): void {
     this.isThreeColumns = isThreeColumns;
   }
-  AddToCart(id:number){
-    console.log(id);
 
-
-  }
 }

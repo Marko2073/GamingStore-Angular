@@ -131,6 +131,10 @@
             }
           </tbody>
         </table>
+        <div class="text-center mt-4">
+          <button class="btn btn-success btn-lg" [disabled]="!isConfigurationComplete()" (click)="OrderConfiguration()" >🛒 Order Configuration</button>
+        </div>
+
       </div>
 
       <div class="p-4 bg-dark text-white rounded shadow-lg w-75 position-absolute access-denied">
