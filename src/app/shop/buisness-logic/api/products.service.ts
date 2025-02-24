@@ -19,26 +19,24 @@ export class ProductService {
     return this.http.get<any>(this.jsonUrl+"?ItemsPerPage=1000");
   }
 
-  getFilteredProducts(filters : any): Observable<any> {
-    if(filters.brandId == 0 && filters.modelId == 0 && filters.specifications.length == 0){
-      return this.getAllProducts();
+  getFilteredProducts(filters: any, page: number, itemsPerPage: number): Observable<any> {
+    let url = `${this.jsonUrl}?page=${page}&itemsPerPage=${itemsPerPage}&`;
+
+    if (filters.brandId !== 0) {
+      url += `brandId=${filters.brandId}&`;
     }
-    else {
-      let url = this.jsonUrl + "?";
-      if(filters.brandId != 0){
-        url += "brandId=" + filters.brandId + "&";
-      }
-      if(filters.modelId != 0){
-        url += "modelId=" + filters.modelId + "&";
-      }
-      if(filters.specifications.length != 0){
-        filters.specifications.forEach((element: any) => {
-          url += "specificationIds=" + element + "&";
-        });
-      }
-      return this.http.get<any>(url);
+    if (filters.modelId !== 0) {
+      url += `modelId=${filters.modelId}&`;
     }
+    if (filters.specifications.length !== 0) {
+      filters.specifications.forEach((element: any) => {
+        url += `specificationIds=${element}&`;
+      });
+    }
+
+    return this.http.get<any>(url);
   }
+
 
   getOneProduct(id: string): Observable<any> {
     const url = `${this.jsonUrl}/${id}`; // Construct URL with page parameter

@@ -25,14 +25,14 @@
               <button class="accordion-button d-flex justify-content-between" type="button"
                       data-bs-toggle="collapse"
                       data-bs-target="#collapseCategory"
-                      aria-expanded="false"
+                      aria-expanded="true"
                       aria-controls="collapseCategory"
                       (click)="toggleArrow('category')"
                       [class.collapsed]="!isCategoryOpen">
                 Filter by Category
               </button>
             </h2>
-            <div id="collapseCategory" class="accordion-collapse collapse"
+            <div id="collapseCategory" class="accordion-collapse collapse show"
                  aria-labelledby="headingCategory"
                  data-bs-parent="#accordionExample"
                  (shown.bs.collapse)="isCategoryOpen = true"
@@ -51,42 +51,115 @@
               </div>
             </div>
           </div>
-        }
 
-        <!-- Specifications Accordion -->
-        <div class="accordion" id="specificationsAccordion">
-          <div class="accordion-item" *ngFor="let parentSpec of Specifications">
-            <h2 class="accordion-header" [id]="'heading' + parentSpec.id">
+        } @if (brands.length>0){
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="headingBrand">
               <button class="accordion-button d-flex justify-content-between" type="button"
                       data-bs-toggle="collapse"
-                      [attr.data-bs-target]="'#collapse' + parentSpec.id"
-                      aria-expanded="false"
-                      [attr.aria-controls]="'collapse' + parentSpec.id"
-                      (click)="toggleArrow(parentSpec.id)"
-                      [class.collapsed]="!parentSpec.isOpen">
-                {{ parentSpec.name }}
+                      data-bs-target="#collapseBrand"
+                      aria-expanded="true"
+                      aria-controls="collapseBrand"
+                      (click)="toggleArrow('brand')"
+                      [class.collapsed]="!isBrandOpen">
+                Filter by Brand
               </button>
             </h2>
-            <div [id]="'collapse' + parentSpec.id" class="accordion-collapse collapse"
-                 [attr.aria-labelledby]="'heading' + parentSpec.id"
-                 data-bs-parent="#specificationsAccordion"
-                 (shown.bs.collapse)="parentSpec.isOpen = true"
-                 (hidden.bs.collapse)="parentSpec.isOpen = false">
+            <div id="collapseBrand" class="accordion-collapse collapse show"
+                 aria-labelledby="headingBrand"
+                 data-bs-parent="#accordionExample"
+                 (shown.bs.collapse)="isBrandOpen = true"
+                 (hidden.bs.collapse)="isBrandOpen = false">
               <div class="accordion-body">
                 <div class="bg-light p-4 mb-30">
                   <form>
-                    <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3"
-                         *ngFor="let childSpec of parentSpec.children">
-                      <input type="checkbox" class="custom-control-input" [id]="'spec-' + childSpec.id">
-                      <label class="custom-control-label" [for]="'spec-' + childSpec.id">{{ childSpec.name }}</label>
-                      <span class="badge border font-weight-normal">{{ childSpec.count || 0 }}</span>
-                    </div>
+                    @for (b of brands; track $index) {
+                      <div class="custom-control custom-radio d-flex align-items-center justify-content-between mb-3">
+                        <input type="radio" class="custom-control-input" [id]="'brand-' + b.id" name="brand" value="{{ b.id }}"
+                               >
+                        <label class="custom-control-label" [for]="'brand-' + b.id">{{ b.name }}</label>
+                      </div>
+                    }
                   </form>
                 </div>
               </div>
             </div>
           </div>
+        }
+      @if(models.length>0){
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="headingModel">
+            <button class="accordion-button d-flex justify-content-between" type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#collapseModel"
+                    aria-expanded="true"
+                    aria-controls="collapseModel"
+                    (click)="toggleArrow('model')"
+                    [class.collapsed]="!isModelOpen">
+              Filter by Model
+            </button>
+          </h2>
+          <div id="collapseModel" class="accordion-collapse collapse show"
+               aria-labelledby="headingModel"
+               data-bs-parent="#accordionExample"
+               (shown.bs.collapse)="isModelOpen = true"
+               (hidden.bs.collapse)="isModelOpen = false">
+            <div class="accordion-body">
+              <div class="bg-light p-4 mb-30">
+                <form>
+                  @for (m of models; track $index) {
+                    <div class="custom-control custom-radio d-flex align-items-center justify-content-between mb-3">
+                      <input type="radio" class="custom-control-input" [id]="'model-' + m.id" name="model" value="{{ m.id }}"
+                             >
+                      <label class="custom-control-label" [for]="'model-' + m.id">{{ m.name }}</label>
+                    </div>
+                  }
+                </form>
+              </div>
+            </div>
+          </div>
         </div>
+      }
+
+
+
+        @else {
+          <div class="accordion" id="specificationsAccordion">
+            <div class="accordion-item" *ngFor="let parentSpec of Specifications; let i = index">
+              <h2 class="accordion-header" [id]="'heading' + parentSpec.id">
+                <button class="accordion-button d-flex justify-content-between" type="button"
+                        data-bs-toggle="collapse"
+                        [attr.data-bs-target]="'#collapse' + parentSpec.id"
+                        [attr.aria-expanded]="i === 0 ? 'true' : 'false'"
+                        [attr.aria-controls]="'collapse' + parentSpec.id"
+                        (click)="toggleArrow(parentSpec.id)"
+                        [class.collapsed]="i !== 0">
+                  {{ parentSpec.name }}
+                </button>
+              </h2>
+              <div [id]="'collapse' + parentSpec.id" class="accordion-collapse collapse"
+                   [class.show]="i === 0"
+                   [attr.aria-labelledby]="'heading' + parentSpec.id"
+                   data-bs-parent="#specificationsAccordion"
+                   (shown.bs.collapse)="parentSpec.isOpen = true"
+                   (hidden.bs.collapse)="parentSpec.isOpen = false">
+                <div class="accordion-body">
+                  <div class="bg-light p-4 mb-30">
+                    <form>
+                      <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3"
+                           *ngFor="let childSpec of parentSpec.children">
+                        <input type="checkbox" class="custom-control-input" [id]="'spec-' + childSpec.id">
+                        <label class="custom-control-label" [for]="'spec-' + childSpec.id">{{ childSpec.name }}</label>
+                        <span class="badge border font-weight-normal">{{ childSpec.count || 0 }}</span>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        }
+
       </div>
     </div>
 

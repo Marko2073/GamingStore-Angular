@@ -3,6 +3,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { switchMap, catchError } from 'rxjs/operators';
+import { forkJoin } from 'rxjs';
+import {BrandsService} from "../../buisness-logic/api/brands.service";
+import {ModelsService} from "../../buisness-logic/api/models.service";
 
 @Component({
   selector: 'app-shop',
@@ -11,6 +14,8 @@ import { switchMap, catchError } from 'rxjs/operators';
 })
 export class ShopComponent implements OnInit {
   response: any[] = [];
+  brands: any[] = [];
+  models: any[] = [];
   Category: string = '';
   Categories: any[] = [];
   isThreeColumns: boolean = true;
@@ -18,21 +23,49 @@ export class ShopComponent implements OnInit {
   showModal: boolean = false;
   Specifications: any[] = [];
   isCategoryOpen: boolean = false;
+  isBrandOpen: boolean = false;
+  isModelOpen: boolean = false;
   CategorySpecifications: any[] = [];
+  filetrSpecificationsParent: any[] = [];
   constructor(
     private route: ActivatedRoute,
     private http: HttpClient,
-    private router: Router
+    private router: Router,
+    private brandsService: BrandsService,
+    private modelsService: ModelsService
   ) {}
+
+
 
   ngOnInit(): void {
     this.loadCategories();
     this.loadProducts();
-    this.loadSpecifications();
-    this.loadCategoySpecifications();
+
+    forkJoin({
+               specifications: this.http.get<any[]>('http://localhost:5083/api/specifications'),
+    categorySpecifications: this.http.get<any[]>('http://localhost:5083/api/categoryspecifications')
+  }).subscribe(({ specifications, categorySpecifications }) => {
+    this.Specifications = specifications;
+    this.CategorySpecifications = categorySpecifications;
+
+    this.filterSpecificationsByCategory(); // Filtriramo specifikacije po kategoriji
+    this.transformSpecifications(); // Mapiramo parent-child odnose tek kad su svi podaci dostupni
+  }, error => {
+    console.error('Error loading specifications data', error);
+  });
+    this.brandsService.getBrands().subscribe((brands) => {
+      this.brands = brands;
+      console.log('Brands:', this.brands);
+    })
+    this.modelsService.getModels().subscribe((models) => {
+      this.models = models;
+    })
+
   }
 
-  private loadCategories(): void {
+
+
+private loadCategories(): void {
     this.http.get<any[]>('http://localhost:5083/api/categories').subscribe(
       (categories) => {
         this.Categories = categories.filter((category) => category.parentId != null);
@@ -97,15 +130,40 @@ export class ShopComponent implements OnInit {
       (catspec) => {
         this.CategorySpecifications = catspec;
         console.log('CategorySpecifications:', this.CategorySpecifications);
-      });
+
+        this.filterSpecificationsByCategory(); // Filtriramo specifikacije po kategoriji
+
+        // Transformišemo specifikacije **tek nakon što imamo filtrirane podatke**
+        this.transformSpecifications();
+      },
+      (error) => console.error('Error loading category specifications', error)
+    );
   }
+
+
+  private filterSpecificationsByCategory(): void {
+    if (this.Category != '') {
+      console.log('usao');
+      this.filetrSpecificationsParent = this.CategorySpecifications
+        .filter(element => element.categoryName == this.Category)
+        .map(element => element.specificationName); // Uzimamo samo specificationName
+
+      console.log(this.filetrSpecificationsParent);
+    }
+  }
+
+
   private transformSpecifications(): void {
-    const groupedSpecifications: any[] = [];
+    if (!this.Specifications.length || !this.CategorySpecifications.length) {
+      return;
+    }
+
+    var groupedSpecifications: any[] = [];
     const specMap = new Map<number, any>();
 
     this.Specifications.forEach(spec => {
       spec.children = [];
-      spec.isOpen = false; // Dodajemo isOpen svojstvo
+      spec.isOpen = false;
       specMap.set(spec.id, spec);
     });
 
@@ -120,9 +178,15 @@ export class ShopComponent implements OnInit {
       }
     });
 
-    this.Specifications = groupedSpecifications;
-    console.log('Transformed Specifications:', this.Specifications);
+    if (this.filetrSpecificationsParent.length > 0) {
+      groupedSpecifications = groupedSpecifications.filter(spec =>
+        this.filetrSpecificationsParent.includes(spec.name)
+      );
+    }
+
+    this.Specifications = groupedSpecifications.filter(spec => spec.children.length > 0);
   }
+
 
 // Varijabla za praćenje stanja kategorija
 
