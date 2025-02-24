@@ -17,23 +17,30 @@
   <div class="row px-xl-5">
     <!-- Shop Sidebar Start -->
     <div class="col-lg-3 col-md-4">
-
       <div class="accordion pb-2" id="accordionExample">
-        <!-- Price Filter Accordion -->
-        @if(!this.Category){
-          <!-- Filter by Category Accordion -->
-            <!-- Filter by Category Accordion -->
+        <!-- Filter by Category Accordion -->
+        @if (!this.Category) {
           <div class="accordion-item">
             <h2 class="accordion-header" id="headingCategory">
-              <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseCategory" aria-expanded="true" aria-controls="collapseCategory">
+              <button class="accordion-button d-flex justify-content-between" type="button"
+                      data-bs-toggle="collapse"
+                      data-bs-target="#collapseCategory"
+                      aria-expanded="false"
+                      aria-controls="collapseCategory"
+                      (click)="toggleArrow('category')"
+                      [class.collapsed]="!isCategoryOpen">
                 Filter by Category
               </button>
             </h2>
-            <div id="collapseCategory" class="accordion-collapse collapse show" aria-labelledby="headingCategory" data-bs-parent="#accordionExample">
+            <div id="collapseCategory" class="accordion-collapse collapse"
+                 aria-labelledby="headingCategory"
+                 data-bs-parent="#accordionExample"
+                 (shown.bs.collapse)="isCategoryOpen = true"
+                 (hidden.bs.collapse)="isCategoryOpen = false">
               <div class="accordion-body">
                 <div class="bg-light p-4 mb-30">
                   <form>
-                    @for(c of Categories; track $index) {
+                    @for (c of Categories; track $index) {
                       <a class="d-block text-decoration-none text-dark p-2 mb-2" href="/shop/{{ c.name }}">
                         {{ c.name }}
                         <span class="badge badge-pill bg-light float-right text-muted border">300</span>
@@ -44,109 +51,45 @@
               </div>
             </div>
           </div>
-
-
         }
 
-
-        <!-- Color Filter Accordion -->
-        <div class="accordion-item">
-          <h2 class="accordion-header" id="headingColor">
-            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseColor" aria-expanded="false" aria-controls="collapseColor">
-              Filter by Color
-            </button>
-          </h2>
-          <div id="collapseColor" class="accordion-collapse collapse show" aria-labelledby="headingColor" data-bs-parent="#accordionExample">
-            <div class="accordion-body">
-              <div class="bg-light p-4 mb-30">
-                <form>
-                  <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                    <input type="checkbox" class="custom-control-input" checked id="color-all">
-                    <label class="custom-control-label" for="color-all">All Color</label>
-                    <span class="badge border font-weight-normal">1000</span>
-                  </div>
-                  <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                    <input type="checkbox" class="custom-control-input" id="color-1">
-                    <label class="custom-control-label" for="color-1">Black</label>
-                    <span class="badge border font-weight-normal">150</span>
-                  </div>
-                  <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                    <input type="checkbox" class="custom-control-input" id="color-2">
-                    <label class="custom-control-label" for="color-2">White</label>
-                    <span class="badge border font-weight-normal">295</span>
-                  </div>
-                  <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                    <input type="checkbox" class="custom-control-input" id="color-3">
-                    <label class="custom-control-label" for="color-3">Red</label>
-                    <span class="badge border font-weight-normal">246</span>
-                  </div>
-                  <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                    <input type="checkbox" class="custom-control-input" id="color-4">
-                    <label class="custom-control-label" for="color-4">Blue</label>
-                    <span class="badge border font-weight-normal">145</span>
-                  </div>
-                  <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between">
-                    <input type="checkbox" class="custom-control-input" id="color-5">
-                    <label class="custom-control-label" for="color-5">Green</label>
-                    <span class="badge border font-weight-normal">168</span>
-                  </div>
-                </form>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Size Filter Accordion -->
-        <div class="accordion-item">
-          <h2 class="accordion-header" id="headingSize">
-            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSize" aria-expanded="false" aria-controls="collapseSize">
-              Filter by Size
-            </button>
-          </h2>
-          <div id="collapseSize" class="accordion-collapse collapse " aria-labelledby="headingSize" data-bs-parent="#accordionExample">
-            <div class="accordion-body">
-              <div class="bg-light p-4 mb-30">
-                <form>
-                  <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                    <input type="checkbox" class="custom-control-input" checked id="size-all">
-                    <label class="custom-control-label" for="size-all">All Size</label>
-                    <span class="badge border font-weight-normal">1000</span>
-                  </div>
-                  <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                    <input type="checkbox" class="custom-control-input" id="size-1">
-                    <label class="custom-control-label" for="size-1">XS</label>
-                    <span class="badge border font-weight-normal">150</span>
-                  </div>
-                  <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                    <input type="checkbox" class="custom-control-input" id="size-2">
-                    <label class="custom-control-label" for="size-2">S</label>
-                    <span class="badge border font-weight-normal">295</span>
-                  </div>
-                  <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                    <input type="checkbox" class="custom-control-input" id="size-3">
-                    <label class="custom-control-label" for="size-3">M</label>
-                    <span class="badge border font-weight-normal">246</span>
-                  </div>
-                  <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                    <input type="checkbox" class="custom-control-input" id="size-4">
-                    <label class="custom-control-label" for="size-4">L</label>
-                    <span class="badge border font-weight-normal">145</span>
-                  </div>
-                  <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between">
-                    <input type="checkbox" class="custom-control-input" id="size-5">
-                    <label class="custom-control-label" for="size-5">XL</label>
-                    <span class="badge border font-weight-normal">168</span>
-                  </div>
-                </form>
+        <!-- Specifications Accordion -->
+        <div class="accordion" id="specificationsAccordion">
+          <div class="accordion-item" *ngFor="let parentSpec of Specifications">
+            <h2 class="accordion-header" [id]="'heading' + parentSpec.id">
+              <button class="accordion-button d-flex justify-content-between" type="button"
+                      data-bs-toggle="collapse"
+                      [attr.data-bs-target]="'#collapse' + parentSpec.id"
+                      aria-expanded="false"
+                      [attr.aria-controls]="'collapse' + parentSpec.id"
+                      (click)="toggleArrow(parentSpec.id)"
+                      [class.collapsed]="!parentSpec.isOpen">
+                {{ parentSpec.name }}
+              </button>
+            </h2>
+            <div [id]="'collapse' + parentSpec.id" class="accordion-collapse collapse"
+                 [attr.aria-labelledby]="'heading' + parentSpec.id"
+                 data-bs-parent="#specificationsAccordion"
+                 (shown.bs.collapse)="parentSpec.isOpen = true"
+                 (hidden.bs.collapse)="parentSpec.isOpen = false">
+              <div class="accordion-body">
+                <div class="bg-light p-4 mb-30">
+                  <form>
+                    <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3"
+                         *ngFor="let childSpec of parentSpec.children">
+                      <input type="checkbox" class="custom-control-input" [id]="'spec-' + childSpec.id">
+                      <label class="custom-control-label" [for]="'spec-' + childSpec.id">{{ childSpec.name }}</label>
+                      <span class="badge border font-weight-normal">{{ childSpec.count || 0 }}</span>
+                    </div>
+                  </form>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-
-
-      <!-- Size End -->
     </div>
+
     <!-- Shop Sidebar End -->
 
 

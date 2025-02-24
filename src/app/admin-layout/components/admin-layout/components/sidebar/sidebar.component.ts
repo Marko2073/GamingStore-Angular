@@ -25,7 +25,9 @@ export class SidebarComponent implements OnInit {
         if (typeof item.name === 'string' && item.name.endsWith('Logs')) {
           this.nizLogs.push(item); // Dodaj u nizLogs
         } else {
-          this.niz.push(item); // Dodaj u niz
+          if(item.name != 'Carts ' && item.name != 'Configurations' && item.name != 'CartItems' && item.name!='Components'){
+            this.niz.push(item); // Dodaj u niz
+          }
         }
       });
     });
