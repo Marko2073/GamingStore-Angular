@@ -12,6 +12,7 @@ import {ModelsService} from "../../buisness-logic/api/models.service";
   templateUrl: './shop.component.html',
   styleUrls: ['./shop.component.css']
 })
+
 export class ShopComponent implements OnInit {
   response: any[] = [];
   brands: any[] = [];
@@ -27,6 +28,7 @@ export class ShopComponent implements OnInit {
   isModelOpen: boolean = false;
   CategorySpecifications: any[] = [];
   filetrSpecificationsParent: any[] = [];
+  allFilters: Filter[] = [];
   constructor(
     private route: ActivatedRoute,
     private http: HttpClient,
@@ -40,26 +42,82 @@ export class ShopComponent implements OnInit {
   ngOnInit(): void {
     this.loadCategories();
     this.loadProducts();
+    this.loadSpecifications();
 
     forkJoin({
-               specifications: this.http.get<any[]>('http://localhost:5083/api/specifications'),
-    categorySpecifications: this.http.get<any[]>('http://localhost:5083/api/categoryspecifications')
-  }).subscribe(({ specifications, categorySpecifications }) => {
-    this.Specifications = specifications;
-    this.CategorySpecifications = categorySpecifications;
-
-    this.filterSpecificationsByCategory(); // Filtriramo specifikacije po kategoriji
-    this.transformSpecifications(); // Mapiramo parent-child odnose tek kad su svi podaci dostupni
-  }, error => {
-    console.error('Error loading specifications data', error);
-  });
-    this.brandsService.getBrands().subscribe((brands) => {
+      categories: this.http.get<any[]>('http://localhost:5083/api/categories'),
+      specifications: this.http.get<any[]>('http://localhost:5083/api/specifications'),
+      categorySpecifications: this.http.get<any[]>('http://localhost:5083/api/categoryspecifications'),
+      brands: this.brandsService.getBrands(),
+      models: this.modelsService.getModels()
+    }).subscribe(({ categories, specifications, categorySpecifications, brands, models }) => {
+      this.Categories = categories.filter(category => category.parentId != null);
+      this.Specifications = specifications;
+      this.CategorySpecifications = categorySpecifications;
       this.brands = brands;
-      console.log('Brands:', this.brands);
-    })
-    this.modelsService.getModels().subscribe((models) => {
       this.models = models;
-    })
+
+      this.filterSpecificationsByCategory();
+      this.transformSpecifications();
+
+      this.allFilters = [];
+
+      if (!this.Category) {
+        this.allFilters.push({
+          id: 1,
+          name: 'Category',
+          children: this.Categories.map(category => ({
+            id: category.id,
+            name: category.name,
+            isChecked: false
+          })),
+          isOpen: false
+        });
+      }
+      if(this.brands.length > 0) {
+        this.allFilters.push({
+          id: 2,
+          name: 'Brand',
+          children: this.brands.map(brand => ({
+            id: brand.id,
+            name: brand.name,
+            isChecked: false
+          })),
+          isOpen: false
+        });
+      }
+      if(this.models.length > 0) {
+        this.allFilters.push({
+          id: 3,
+          name: 'Model',
+          children: this.models.map(model => ({
+            id: model.id,
+            name: model.name,
+            isChecked: false
+          })),
+          isOpen: false
+        });
+      }
+      this.allFilters.push(...this.Specifications.map(spec => ({
+        id: spec.id,
+        name: spec.name,
+        children: spec.children.map((child: any) => ({
+          id: child.id,
+          name: child.name,
+          isChecked: false // Dodaj isChecked ovde
+        })),
+        isOpen: false
+      })));
+      this.allFilters[0].isOpen = true;
+      console.log(this.allFilters);
+
+
+    }, error => {
+      console.error('Error loading data', error);
+    });
+
+
+
 
   }
 
@@ -117,7 +175,6 @@ private loadCategories(): void {
     this.http.get<any[]>('http://localhost:5083/api/specifications').subscribe(
       (specifications) => {
         this.Specifications = specifications;
-        console.log('Specifications:', this.Specifications);
         this.transformSpecifications();
 
 
@@ -129,7 +186,6 @@ private loadCategories(): void {
     this.http.get<any[]>('http://localhost:5083/api/categoryspecifications').subscribe(
       (catspec) => {
         this.CategorySpecifications = catspec;
-        console.log('CategorySpecifications:', this.CategorySpecifications);
 
         this.filterSpecificationsByCategory(); // Filtriramo specifikacije po kategoriji
 
@@ -143,12 +199,10 @@ private loadCategories(): void {
 
   private filterSpecificationsByCategory(): void {
     if (this.Category != '') {
-      console.log('usao');
       this.filetrSpecificationsParent = this.CategorySpecifications
         .filter(element => element.categoryName == this.Category)
         .map(element => element.specificationName); // Uzimamo samo specificationName
 
-      console.log(this.filetrSpecificationsParent);
     }
   }
 
@@ -222,4 +276,17 @@ private loadCategories(): void {
 
 
 
+}
+
+export interface ChildFilter {
+  id: number;
+  name: string;
+  isChecked: boolean;
+}
+
+export interface Filter {
+  children: ChildFilter[];
+  id: number;
+  isOpen: boolean;
+  name: string;
 }

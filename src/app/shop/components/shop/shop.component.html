@@ -15,10 +15,63 @@
 <!-- Shop Start -->
 <div class="container-fluid">
   <div class="row px-xl-5">
-    <!-- Shop Sidebar Start -->
     <div class="col-lg-3 col-md-4">
       <div class="accordion pb-2" id="accordionExample">
-        <!-- Filter by Category Accordion -->
+        <div class="accordion" id="specificationsAccordion">
+          <div class="accordion-item" *ngFor="let parentSpec of allFilters; let i = index">
+            <h2 class="accordion-header" [id]="'heading' + parentSpec.id">
+              <button class="accordion-button d-flex justify-content-between" type="button"
+                      data-bs-toggle="collapse"
+                      [attr.data-bs-target]="'#collapse' + parentSpec.id"
+                      [attr.aria-expanded]="i === 0 ? 'true' : 'false'"
+                      [attr.aria-controls]="'collapse' + parentSpec.id"
+                      (click)="toggleArrow(parentSpec.id)"
+                      [class.collapsed]="i !== 0">
+                {{ parentSpec.name }}
+              </button>
+            </h2>
+            <div [id]="'collapse' + parentSpec.id" class="accordion-collapse collapse"
+                 [class.show]="i === 0"
+                 [attr.aria-labelledby]="'heading' + parentSpec.id"
+                 data-bs-parent="#specificationsAccordion"
+                 (shown.bs.collapse)="parentSpec.isOpen = true"
+                 (hidden.bs.collapse)="parentSpec.isOpen = false">
+              <div class="accordion-body">
+                <div class="bg-light p-4 mb-30">
+                  <form>
+                    <ng-container *ngIf="parentSpec.id == 1">
+                      <a *ngFor="let c of Categories;"
+                         class="d-block text-decoration-none text-dark p-2 mb-2"
+                         [href]="'/shop/' + c.name">
+                        {{ c.name }}
+                      </a>
+                    </ng-container>
+                    <ng-container *ngIf="parentSpec.id != 1">
+                      <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3"
+                           *ngFor="let c of parentSpec.children;">
+                        <input type="checkbox" class="custom-control-input"
+                               [id]="'category-' + c.id"
+                               name="category"
+                               [checked]="c.isChecked"
+                               (change)="c.isChecked = !c.isChecked">
+                        <label class="custom-control-label" [for]="'category-' + c.id">{{ c.name }}</label>
+                      </div>
+                    </ng-container>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+    <!-- Shop Sidebar Start -->
+    <!--<div class="col-lg-3 col-md-4">
+      <div class="accordion pb-2" id="accordionExample">
+        &lt;!&ndash; Filter by Category Accordion &ndash;&gt;
         @if (!this.Category) {
           <div class="accordion-item">
             <h2 class="accordion-header" id="headingCategory">
@@ -123,7 +176,7 @@
 
 
 
-        @else {
+        @if(Specifications.length>0) {
           <div class="accordion" id="specificationsAccordion">
             <div class="accordion-item" *ngFor="let parentSpec of Specifications; let i = index">
               <h2 class="accordion-header" [id]="'heading' + parentSpec.id">
@@ -161,7 +214,7 @@
         }
 
       </div>
-    </div>
+    </div>-->
 
     <!-- Shop Sidebar End -->
 
