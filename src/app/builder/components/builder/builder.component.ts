@@ -73,6 +73,7 @@ export class BuilderComponent {
 
         const url = `http://localhost:5083/api/products?ModelVersionId=${this.components[key]}`;
 
+
         this.getData(url).subscribe(response => {
           this.AddedComponents[response[0].categoryName]=response[0];
           console.log(this.AddedComponents);

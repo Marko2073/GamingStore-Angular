@@ -6,6 +6,7 @@ import { switchMap, catchError } from 'rxjs/operators';
 import { forkJoin } from 'rxjs';
 import {BrandsService} from "../../buisness-logic/api/brands.service";
 import {ModelsService} from "../../buisness-logic/api/models.service";
+import {ProductService} from "../../buisness-logic/api/products.service";
 
 @Component({
   selector: 'app-shop',
@@ -29,12 +30,20 @@ export class ShopComponent implements OnInit {
   CategorySpecifications: any[] = [];
   filetrSpecificationsParent: any[] = [];
   allFilters: Filter[] = [];
+
+
+
+  filters = {
+    brandId: [] as number[],
+    specificationIds: [] as number[]
+  };
   constructor(
     private route: ActivatedRoute,
     private http: HttpClient,
     private router: Router,
     private brandsService: BrandsService,
-    private modelsService: ModelsService
+    private modelsService: ModelsService,
+    private productService: ProductService
   ) {}
 
 
@@ -86,18 +95,7 @@ export class ShopComponent implements OnInit {
           isOpen: false
         });
       }
-      if(this.models.length > 0) {
-        this.allFilters.push({
-          id: 3,
-          name: 'Model',
-          children: this.models.map(model => ({
-            id: model.id,
-            name: model.name,
-            isChecked: false
-          })),
-          isOpen: false
-        });
-      }
+
       this.allFilters.push(...this.Specifications.map(spec => ({
         id: spec.id,
         name: spec.name,
@@ -112,9 +110,12 @@ export class ShopComponent implements OnInit {
       console.log(this.allFilters);
 
 
+
+
     }, error => {
       console.error('Error loading data', error);
     });
+
 
 
 
@@ -271,6 +272,57 @@ private loadCategories(): void {
         spec.isOpen = !spec.isOpen;
       }
     }
+  }
+
+  filterchange( parentid:number, id:number): void {
+    this.filters.brandId = [];
+    this.filters.specificationIds = [];
+
+
+    for (let i = 0; i < this.allFilters.length; i++) {
+      if(this.allFilters[i].id == parentid) {
+        for(let j = 0; j < this.allFilters[i].children.length; j++) {
+          if(this.allFilters[i].children[j].id == id) {
+            this.allFilters[i].children[j].isChecked = !this.allFilters[i].children[j].isChecked;
+          }
+        }
+      }
+    }
+
+
+    for (let i = 0; i < this.allFilters.length; i++) {
+      for(let j = 0; j < this.allFilters[i].children.length; j++) {
+        if(this.allFilters[i].children[j].isChecked) {
+          if(this.allFilters[i].name == 'Brand') {
+            this.filters.brandId.push(this.allFilters[i].children[j].id);
+
+          }
+          else {
+            this.filters.specificationIds.push(this.allFilters[i].children[j].id);
+
+          }
+
+        }
+      }
+    }
+    this.productService.getFilteredProducts(this.filters, 1, 15).subscribe(
+      (response) => {
+        this.response = response;
+        console.log(this.response);
+      },
+      (error) => {
+        console.error('Error fetching filtered products', error);
+      }
+    );
+
+
+
+
+
+
+
+
+
   }
 
 

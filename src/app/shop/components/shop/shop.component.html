@@ -50,11 +50,11 @@
                       <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3"
                            *ngFor="let c of parentSpec.children;">
                         <input type="checkbox" class="custom-control-input"
-                               [id]="'category-' + c.id"
+                               [id]="'category-' +c.name+ c.id"
                                name="category"
                                [checked]="c.isChecked"
-                               (change)="c.isChecked = !c.isChecked">
-                        <label class="custom-control-label" [for]="'category-' + c.id">{{ c.name }}</label>
+                               (change)=" filterchange(parentSpec.id, c.id)">
+                        <label class="custom-control-label" [for]="'category-' +c.name+ c.id">{{ c.name }}</label>
                       </div>
                     </ng-container>
                   </form>

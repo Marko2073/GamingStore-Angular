@@ -21,15 +21,16 @@ export class ProductService {
 
   getFilteredProducts(filters: any, page: number, itemsPerPage: number): Observable<any> {
     let url = `${this.jsonUrl}?page=${page}&itemsPerPage=${itemsPerPage}&`;
+    console.log(filters.brandId.length);
 
-    if (filters.brandId !== 0) {
-      url += `brandId=${filters.brandId}&`;
+    if (filters.brandId.length !== 0) {
+      filters.brandId.forEach((element: any) => {
+        url += `brandId=${element}&`;
+      });
+
     }
-    if (filters.modelId !== 0) {
-      url += `modelId=${filters.modelId}&`;
-    }
-    if (filters.specifications.length !== 0) {
-      filters.specifications.forEach((element: any) => {
+    if (filters.specificationIds.length !== 0) {
+      filters.specificationIds.forEach((element: any) => {
         url += `specificationIds=${element}&`;
       });
     }
