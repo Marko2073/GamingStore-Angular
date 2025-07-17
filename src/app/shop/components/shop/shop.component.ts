@@ -275,8 +275,13 @@ private loadCategories(): void {
   }
 
   filterchange( parentid:number, id:number): void {
+
+
+
     this.filters.brandId = [];
     this.filters.specificationIds = [];
+
+
 
 
     for (let i = 0; i < this.allFilters.length; i++) {
@@ -305,15 +310,36 @@ private loadCategories(): void {
         }
       }
     }
-    this.productService.getFilteredProducts(this.filters, 1, 15).subscribe(
-      (response) => {
-        this.response = response;
-        console.log(this.response);
-      },
-      (error) => {
-        console.error('Error fetching filtered products', error);
-      }
-    );
+
+    if(this.filters.brandId.length === 0 && this.filters.specificationIds.length === 0) {
+      this.loadProducts();
+    }
+    else {
+      this.productService.getFilteredProducts(this.filters, 1, 15).subscribe(
+        (response) => {
+          if(this.route.snapshot.params['category']) {
+            console.log(this.response);
+            this.response = response.filter((product: any) => product.categoryName === this.route.snapshot.params['category']);
+          }
+          else{
+            console.log(this.response);
+            this.response = response;
+          }
+
+
+
+
+
+
+
+        },
+        (error) => {
+          console.error('Error fetching filtered products', error);
+        }
+      );
+    }
+
+
 
 
 

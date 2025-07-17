@@ -17,31 +17,27 @@
       <div class="tab-content">
         <div class="tab-pane fade show active" id="tab-pane-1">
           <div id="profile" class="row h-100">
-            <div class="col-xl-4 h-100" >
-
+            <div class="col-xl-4 h-100">
               <div class="card mb-4 mb-xl-0">
                 <div class="card-header">Profile Picture</div>
                 <div class="card-body text-center ">
-
-                  <img class="img-account-profile rounded-circle mb-2" style="width: 150px"  src="http://localhost:5083/images/{{response.path}}" alt>
+                  <img class="img-account-profile rounded-circle mb-2" style="width: 150px"
+                       [src]="'http://localhost:5083/images/' + response.path" alt>
 
                   <div class="small font-italic text-muted mb-4">JPG or PNG no larger than 5 MB</div>
-                  <form action="" method="POST" enctype="multipart/form-data">
 
-
-                    <input type="file" name="path" class="form-control mb-4">
-                    <input type="submit" value="Save changes" class="btn btn-primary">
-                  </form>
-
+                  <input type="file" class="form-control mb-4" (change)="onFileSelected($event)">
+                  <button (click)="updateProfilePicture()" class="btn btn-primary">Save changes</button>
                 </div>
               </div>
             </div>
+
+
             <div class="col-xl-8 h-100" >
 
               <div class="card mb-4">
                 <div class="card-header">Account Details</div>
                 <div class="card-body">
-                  <form action="" method="POST">
 
 
 
@@ -49,36 +45,36 @@
                     <div class="row">
                       <div class="col-md-6 form-group">
                         <label>First Name</label>
-                        <input class="form-control" type="text" placeholder="John" name="firstname" value="{{response.firstName}}">
+                        <input class="form-control" type="text" [(ngModel)]="user.firstName" name="firstname" placeholder="John">
                       </div>
                       <div class="col-md-6 form-group">
                         <label>Last Name</label>
-                        <input class="form-control" type="text" placeholder="Doe" name="lastname" value="{{response.lastName}}">
+                        <input class="form-control" type="text" [(ngModel)]="user.lastName" name="lastname" placeholder="Doe">
                       </div>
                       <div class="col-md-6 form-group">
                         <label>E-mail</label>
-                        <input class="form-control" type="text" placeholder="example@email.com" name="email" value="{{response.email}}">
+                        <input class="form-control" type="text" [(ngModel)]="user.email" name="email" placeholder="example@email.com">
                       </div>
                       <div class="col-md-6 form-group">
                         <label>Mobile No</label>
-                        <input class="form-control" type="text" placeholder="+123 456 789" name="phone" value="{{response.phone}}">
+                        <input class="form-control" type="text" [(ngModel)]="user.phone" name="phone" placeholder="+123 456 789">
                       </div>
                       <div class="col-md-6 form-group">
                         <label>Address Line 1</label>
-                        <input class="form-control" type="text" placeholder="123 Street" name="address" value="{{response.address}}">
+                        <input class="form-control" type="text" [(ngModel)]="user.address" name="address" placeholder="123 Street">
                       </div>
 
                       <div class="col-md-6 form-group">
                         <label>City</label>
-                        <input class="form-control" type="text" placeholder="New York" name="city" value="{{response.city}}">
+                        <input class="form-control" type="text" [(ngModel)]="user.city" name="city" placeholder="New York">
                       </div>
 
 
 
                     </div>
 
-                    <input class="btn btn-primary" type="submit" value="Save changes">
-                  </form>
+                    <button class="btn btn-primary" type="submit" (click)="UpdateUser()"> Save changes</button>
+
                 </div>
               </div>
             </div>
